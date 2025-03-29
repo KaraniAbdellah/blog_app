@@ -13,6 +13,9 @@ const Header = () => {
                 <button className='bg-sky-600 hover:bg-sky-700 transition-all px-3 py-1 rounded-sm ml-2'>
                     <a href="" className='font-medium text-white'>Registration</a>
                 </button>
+                <button className='bg-sky-600 w-[40px] h-[40px] hover:bg-sky-700 transition-all px-3 py-1 rounded-full ml-2'>
+                    <a href="" className='font-medium text-white'>A</a>
+                </button>
             </nav>
         </header>
     );
