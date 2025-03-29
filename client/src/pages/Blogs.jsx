@@ -1,11 +1,19 @@
-import React from 'react';
+import React from "react";
+import Blog from "./Blog";
 
-const Post = () => {
-    return (
-        <div>
-            Post
-        </div>
-    );
-}
+const Blogs = () => {
+  return (
+    <div className="blogs w-full mr-4 bg-slate-700">
+      <Blog></Blog>
+      <Blog></Blog>
+      <Blog></Blog>
+      <Blog></Blog>
+      <Blog></Blog>
+      <Blog></Blog>
+      <Blog></Blog>
+      <Blog></Blog>
+    </div>
+  );
+};
 
-export default Post;
+export default Blogs;

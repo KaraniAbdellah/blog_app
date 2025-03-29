@@ -2,16 +2,16 @@ import React from 'react';
 
 const Aside = () => {
     return (
-        <div>
-            <h2 className='font-semibold'>Recommended topics</h2>
+        <div className='w-[35%] text-start bg-sky-700'>
+            <h2 className='font-semibold text-lg text-zinc-800'>Recommended topics</h2>
             <nav>
-                <button className='p-2 bg-gray-300'>Programming</button>
-                <button className='p-2 bg-gray-300'>Music</button>
-                <button className='p-2 bg-gray-300'>Technology</button>
-                <button className='p-2 bg-gray-300'>Self Development</button>
+                <button className='p-3 bg-gray-200 m-1 rounded-full'>Programming</button>
+                <button className='p-3 bg-gray-200 m-1 rounded-full'>Music</button>
+                <button className='p-3 bg-gray-200 m-1 rounded-full'>Technology</button>
+                <button className='p-3 bg-gray-200 m-1 rounded-full'>Self Development</button>
             </nav>
             {/* Go to explore-topics */}
-            <h2 className='text-gray-400'>see more topics</h2> 
+            <button className='text-gray-400 m-1 font-medium'>see more topics</button> 
         </div>
     );
 }
