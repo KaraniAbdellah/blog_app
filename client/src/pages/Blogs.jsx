@@ -3,7 +3,7 @@ import Blog from "./Blog";
 
 const Blogs = () => {
   return (
-    <div className="blogs w-full mr-4 bg-slate-700">
+    <div className="blogs w-full mr-4">
       <Blog></Blog>
       <Blog></Blog>
       <Blog></Blog>
