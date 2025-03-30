@@ -10,7 +10,7 @@ const Header = () => {
       <div className="logo flex justify-between items-center">
         <a
           href="/"
-          className="font-semibold font-serif text-3xl mr-3 text-zinc-800"
+          className="font-semibold md:block hidden font-serif text-3xl mr-3 text-zinc-800"
         >
           Crafting
         </a>
