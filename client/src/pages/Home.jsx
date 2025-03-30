@@ -5,8 +5,8 @@ import Nav from "./Nav";
 
 const Home = () => {
   return (
-    <div className="home mx-24 mt-10 flex justify-between items-start">
-      <div className="w-[70%]">
+    <div className="home lg:mx-24 lg:mt-8 m-6 flex justify-between items-start">
+      <div className="lg:w-[70%] w-full">
         <Nav></Nav>
         <Blogs></Blogs>
       </div>

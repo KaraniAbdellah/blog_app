@@ -1,17 +1,21 @@
 import React from 'react';
 
 const Aside = () => {
+    const topics = ["Programming", "Music", "Technology", "Self Development", "Machine Learning"];
     return (
-        <div className='w-[25%] text-start'>
+        <div className='lg:w-[25%] lg:block hidden mt-2 sticky right-0 top-10 text-start'>
             <h2 className='font-semibold text-lg text-zinc-800'>Recommended topics</h2>
             <nav>
-                <button className='p-3 bg-gray-200 m-1 text-zinc-900 rounded-full'>Programming</button>
-                <button className='p-3 bg-gray-200 m-1 text-zinc-900 rounded-full'>Music</button>
-                <button className='p-3 bg-gray-200 m-1 text-zinc-900 rounded-full'>Technology</button>
-                <button className='p-3 bg-gray-200 m-1 text-zinc-900 rounded-full'>Self Development</button>
+                {
+                    topics.map((topic, index) => {
+                        return (
+                            <button key={index} className='p-3 bg-gray-200 m-1 text-zinc-900 rounded-full text-sm'>{topic}</button>
+                        )
+                    })
+                }
             </nav>
             {/* Go to explore-topics */}
-            <button className='text-gray-400 m-1 font-medium'>see more topics</button> 
+            <button className='text-gray-400 m-1 text-sm font-medium'>See more topics</button> 
         </div>
     );
 }
