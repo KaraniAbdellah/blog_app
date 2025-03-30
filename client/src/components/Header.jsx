@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Search, LogIn, ArrowUpRight, User, LogOut } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
@@ -8,7 +9,7 @@ const Header = () => {
     <header className="h-[70px] border px-8 bg-gray-50 w-full flex justify-between items-center">
       <div className="logo flex justify-between items-center">
         <a
-          href="#"
+          href="/"
           className="font-semibold font-serif text-3xl mr-3 text-zinc-800"
         >
           Crafting
@@ -41,12 +42,14 @@ const Header = () => {
         </div>
       </div>
       <nav className="flex relative">
-        <button className="flex transition-all px-3 py-2 rounded-sm">
-          <LogIn className="text-zinc-500 mr-2 font-mono" />
-          <a href="" className="text-zinc-500">
-            Login
-          </a>
-        </button>
+        <Link to="/login">
+          <button className="flex transition-all px-3 py-2 rounded-sm">
+            <LogIn className="text-zinc-500 mr-2 font-mono" />
+            <a href="" className="text-zinc-500">
+              Login
+            </a>
+          </button>
+        </Link>
         <button
           onBlur={() => setProfile(false)}
           onClick={() => setProfile(!Profile)}
