@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Search, LogIn, ArrowUpRight, User, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);

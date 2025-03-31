@@ -1,7 +1,8 @@
 import Home from "./pages/Home";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
+import "dotenv/config";
 
 function App() {
   return (
