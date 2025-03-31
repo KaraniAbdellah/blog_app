@@ -1,10 +1,11 @@
 // Start UserRoute
 import express from "express";
-import { register } from "../controllers/UserControllers.js";
+import { register, login } from "../controllers/UserControllers.js";
 
 const UserRoute = express.Router();
 UserRoute.use("/register", register);
+UserRoute.use("/login", login);
+
 
 
 export default UserRoute;
-

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Chrome, AtSign, Lock, User, Eye, EyeOff } from "lucide-react";
-import {
-  LoginPageSchema,
-} from "../InputValidations/LoginPageInput";
+import { LoginPageSchema } from "../InputValidations/LoginPageInput";
 import axios from "axios";
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -17,25 +16,42 @@ const LoginPage = () => {
     setIsValid(false);
   };
 
+  const userLogin = async () => {
+    try {
+      await axios.post(`http://127.0.0.1:3000/user/login`, user).then((res) => {
+        console.log(res.data);
+      });
+      setIsValid(false);
+    } catch (error) {
+      toast("Login Failed. Try Again later", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+    }
+  };
+
+  const userRegister = async () => {
+    try {
+      await axios.post(`http://127.0.0.1:3000/user/register`, user).then((res) => {
+        console.log(res.data);
+      });
+      setIsValid(false);
+      toast("Registration Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
+      setIsLogin(true);
+    } catch (error) {
+      toast("Registration Failed", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Here Input Validation With Yup
     const isValid = await LoginPageSchema.isValid(user);
+    console.log(isValid);
     if (isLogin && isValid) {
-      axios.post(`http://127.0.0.1:3000/user/ogin`).then((res) => {
-        console.log(res.data);
-      });
-      setIsValid(false);
+      userLogin();
     } else if (!isLogin && isValid) {
-      axios.post(`http://127.0.0.1:3000/user/lregister`).then((res) => {
-        console.log(res.data);
-      });
-      setIsValid(false);
+      userRegister();
     } else {
       setIsValid(true);
     }
-
-    
   };
 
   return (
@@ -165,22 +181,6 @@ const LoginPage = () => {
             </div>
             <button className="mx-auto my-2 rounded-sm bg-sky-600 w-full p-2 font-semibold text-white">
               Register
-            </button>
-
-            <p className="text-gray-500 relative my-2">
-              <span
-                className="before:absolute before:bg-gray-200 before:w-[41%] before:h-[1px] 
-            before:bottom-1/2 before:right-0
-            after:absolute after:bg-gray-200 after:w-[41%] after:h-[1px] 
-            after:bottom-1/2 after:left-0"
-              >
-                OR
-              </span>
-            </p>
-
-            <button className="flex my-3 justify-center items-center mx-auto rounded-sm bg-sky-600 text-white w-full p-2">
-              <Chrome className="mr-2" />
-              <span className="font-medium">Log in with google</span>
             </button>
 
             <button
