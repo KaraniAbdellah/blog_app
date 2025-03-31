@@ -4,10 +4,21 @@ import { Chrome, AtSign, Lock, User, Eye, EyeOff } from "lucide-react";
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleChange = () => {
     setIsLogin(!isLogin);
     setShowPassword(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here Input Validation With Yup
+    console.log(email, password, username);
   }
+
   return (
     <div className="flex justify-center items-center w-full h-[calc(100vh-80px)]">
       <div className="bg-white lg:w-[40%] md:w-[60%] w-[90%] shadow-md rounded-md p-6">
@@ -34,10 +45,12 @@ const LoginPage = () => {
           </button>
         </nav>
         {isLogin ? (
-          <from className="text-center">
+          <form onSubmit={(e) => handleSubmit(e)} className="text-center">
             <div className="flex justify-start p-2 mb-4 items-center w-full email rounded-sm border-gray-300 border bg-gray-50">
               <AtSign className="text-gray-300 font-medium mr-2" />
               <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full email rounded-sm bg-gray-50 outline-none border-non"
                 type="email"
                 placeholder="Phone number, username, or email"
@@ -51,10 +64,11 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
               />
-              <p className="text-gray-500" onClick={() => setShowPassword(!showPassword)}>
-                {
-                  showPassword ? <Eye /> : <EyeOff />
-                }
+              <p
+                className="text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <Eye /> : <EyeOff />}
               </p>
             </div>
             <button className="mx-auto my-2 rounded-sm bg-sky-600 w-full p-2 font-semibold text-white">
@@ -68,20 +82,24 @@ const LoginPage = () => {
               <span className="mr-1">No account?</span>
               <span className="text-sky-700 font-semibold">Create one</span>
             </button>
-          </from>
+          </form>
         ) : (
-          <from className="text-center">
+          <form onSubmit={(e) => handleSubmit(e)} className="text-center">
             <div className="flex justify-start p-2 mb-4 items-center w-full email rounded-sm border-gray-300 border bg-gray-50">
               <User className="text-gray-300 font-medium mr-2" />
               <input
-                className="w-full email rounded-sm bg-gray-50 outline-none border-non"
-                type="email"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full username rounded-sm bg-gray-50 outline-none border-non"
+                type="Username"
                 placeholder="Username"
               />
             </div>
             <div className="flex justify-start p-2 mb-4 items-center w-full email rounded-sm border-gray-300 border bg-gray-50">
               <AtSign className="text-gray-300 font-medium mr-2" />
               <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full email rounded-sm bg-gray-50 outline-none border-non"
                 type="email"
                 placeholder="Phone number, username, or email"
@@ -95,10 +113,11 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
               />
-              <p className="text-gray-500" onClick={() => setShowPassword(!showPassword)}>
-                {
-                  showPassword ? <Eye /> : <EyeOff />
-                }
+              <p
+                className="text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <Eye /> : <EyeOff />}
               </p>
             </div>
             <button className="mx-auto my-2 rounded-sm bg-sky-600 w-full p-2 font-semibold text-white">
@@ -128,7 +147,7 @@ const LoginPage = () => {
               <span className="mr-2">Already have an account?</span>
               <span className="text-sky-700 font-semibold">Sign in</span>
             </button>
-          </from>
+          </form>
         )}
       </div>
     </div>

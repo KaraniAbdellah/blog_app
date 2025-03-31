@@ -45,9 +45,9 @@ const Header = () => {
         <Link to="/login">
           <button className="flex transition-all px-3 py-2 rounded-sm">
             <LogIn className="text-zinc-500 mr-2 font-mono" />
-            <a href="" className="text-zinc-500">
+            <p className="text-zinc-500">
               Login
-            </a>
+            </p>
           </button>
         </Link>
         <button
