@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router";
 import { Chrome, AtSign, Lock, User, Eye, EyeOff } from "lucide-react";
 import { LoginPageSchema } from "../InputValidations/LoginPageInput";
 import axios from "axios";
 import toast from 'react-hot-toast';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({ username: "", email: "", password: "" });
@@ -20,10 +22,12 @@ const LoginPage = () => {
     try {
       await axios.post(`http://127.0.0.1:3000/user/login`, user).then((res) => {
         console.log(res.data);
+        toast("✅ Login Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
+        setIsValid(false);
+        navigate("/");
       });
-      setIsValid(false);
     } catch (error) {
-      toast("Login Failed. Try Again later", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+      toast("❌ Wrong Credentials", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
     }
   };
 
@@ -31,15 +35,15 @@ const LoginPage = () => {
     try {
       await axios.post(`http://127.0.0.1:3000/user/register`, user).then((res) => {
         if (res.data.message) {
-          toast("Email Already Exit", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+          toast("❌ Email Already Exit", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
         } else {
-          toast("Registration Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
+          toast("✅ Registration Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
           setIsValid(false);
           setIsLogin(true);
         }
       });
     } catch (error) {
-      toast("Registration Failed", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+      toast("❌ Registration Failed", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
     }
   };
 
@@ -47,13 +51,12 @@ const LoginPage = () => {
     e.preventDefault();
     // Here Input Validation With Yup
     const isValid = await LoginPageSchema.isValid(user);
+    setIsValid(!isValid);
     console.log(isValid);
     if (isLogin && isValid) {
       userLogin();
     } else if (!isLogin && isValid) {
       userRegister();
-    } else {
-      setIsValid(true);
     }
   };
 

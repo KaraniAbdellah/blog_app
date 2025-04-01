@@ -34,8 +34,27 @@ const register = async (req, res) => {
 // @desc Register new user
 // @route Register POST /user/Register
 // @access Public
-const login = (req, res) => {
-    console.log(req.body);
+const login = async (req, res) => {
+    try {
+        const {email, password} = req.body;
+        const user = await UserModel.findOne({email});
+        const passOk = bcrypt.compareSync(password, user.password);
+        if (passOk && user) {
+            const token = jwt.sign({id: user._id, username: user.username}, process.env.SECRET_KEY);
+            if (token) {
+                res.cookie("user_token", token, {
+                    httpOnly: true, // document.cookie can't read it
+                    secure: true, // cookie send via https only
+                    sameSite: "Strict", // For CSRF attack
+                    maxAge: 3600000
+                }).json("ok");
+            }
+        } else {
+            res.status(400).send(user);
+        }
+    } catch (error) {
+        res.status(400).send({error: error});
+    }
 }
 
 
