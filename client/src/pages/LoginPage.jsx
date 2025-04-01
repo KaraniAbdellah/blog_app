@@ -30,11 +30,14 @@ const LoginPage = () => {
   const userRegister = async () => {
     try {
       await axios.post(`http://127.0.0.1:3000/user/register`, user).then((res) => {
-        console.log(res.data);
+        if (res.data.message) {
+          toast("Email Already Exit", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+        } else {
+          toast("Registration Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
+          setIsValid(false);
+          setIsLogin(true);
+        }
       });
-      setIsValid(false);
-      toast("Registration Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
-      setIsLogin(true);
     } catch (error) {
       toast("Registration Failed", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
     }

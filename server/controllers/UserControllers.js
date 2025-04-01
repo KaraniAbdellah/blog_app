@@ -14,14 +14,17 @@ const register = async (req, res) => {
     try {
         const isUserExit = await UserModel.findOne({email: email});
         if (isUserExit) {
-            res.status(400).json({message: "This User Already Exit"});
+            return res.status(200).json({message: "User Already Exit"});
         }
         const user = await UserModel.create({
             username,
             email,
             password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
         });
-        res.json(user);
+        if (user) {
+            return res.status(200).json(user);
+        }
+        return res.status(400).send({ message: "Failed Saving User Data" });
     } catch (error) {
         res.status(400).send({error: error});
     }
