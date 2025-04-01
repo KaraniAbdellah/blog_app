@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 import { Chrome, AtSign, Lock, User, Eye, EyeOff } from "lucide-react";
 import { LoginPageSchema } from "../InputValidations/LoginPageInput";
 import axios from "axios";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -20,30 +20,56 @@ const LoginPage = () => {
 
   const userLogin = async () => {
     try {
-      await axios.post(`http://127.0.0.1:3000/user/login`, user).then((res) => {
-        console.log(res.data);
-        toast("✅ Login Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
-        setIsValid(false);
-        navigate("/");
-      });
+      await axios
+        .post(`http://127.0.0.1:3000/user/login`, user, {
+          withCredentials: true, // For saving cookie that exit in set-cookie
+          // We can use it inside react app
+          // Consider the cookie as credentials infomations
+        })
+        .then((res) => {
+          toast("✅ Login Success", {
+            duration: 2000,
+            style: { color: "#4BB543", fontWeight: "bold" },
+          });
+          setIsValid(false);
+          navigate("/loading");
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        });
     } catch (error) {
-      toast("❌ Wrong Credentials", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+      console.log(error);
+      toast("❌ Wrong Credentials", {
+        duration: 2000,
+        style: { color: "#ED4337", fontWeight: "bold" },
+      });
     }
   };
 
   const userRegister = async () => {
     try {
-      await axios.post(`http://127.0.0.1:3000/user/register`, user).then((res) => {
-        if (res.data.message) {
-          toast("❌ Email Already Exit", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
-        } else {
-          toast("✅ Registration Success", {duration: 2000, style: {color: "#4BB543", fontWeight: "bold"},});
-          setIsValid(false);
-          setIsLogin(true);
-        }
-      });
+      await axios
+        .post(`http://127.0.0.1:3000/user/register`, user)
+        .then((res) => {
+          if (res.data.message) {
+            toast("❌ Email Already Exit", {
+              duration: 2000,
+              style: { color: "#ED4337", fontWeight: "bold" },
+            });
+          } else {
+            toast("✅ Registration Success", {
+              duration: 2000,
+              style: { color: "#4BB543", fontWeight: "bold" },
+            });
+            setIsValid(false);
+            setIsLogin(true);
+          }
+        });
     } catch (error) {
-      toast("❌ Registration Failed", {duration: 2000, style: {color: "#ED4337", fontWeight: "bold"},});
+      toast("❌ Registration Failed", {
+        duration: 2000,
+        style: { color: "#ED4337", fontWeight: "bold" },
+      });
     }
   };
 

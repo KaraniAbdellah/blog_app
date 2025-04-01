@@ -5,12 +5,14 @@ import cors from "cors";
 import "dotenv/config";
 import BlogRoute from "./routes/BlogRoute.js";
 import UserRoute from "./routes/UserRoute.js";
+import cookieParser from "cookie-parser";
 
 
 // Create REST API
 const rest_api = express();
+rest_api.use(cors({credentials: true, origin: true}));
 rest_api.use(express.json());
-rest_api.use(cors());
+rest_api.use(cookieParser());
 rest_api.use("/blog", BlogRoute);
 rest_api.use("/user", UserRoute);
 

@@ -1,10 +1,47 @@
-import React, { useState } from "react";
-import { Search, LogIn, ArrowUpRight, User, LogOut } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import {
+  Search,
+  LogIn,
+  ArrowUpRight,
+  User,
+  LogOut,
+  FilePenLine,
+} from "lucide-react";
 import { Link } from "react-router";
+import axios from "axios";
+import Cookie from "js-cookie";
 
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
   const [Profile, setProfile] = useState(false);
+  const [username, setUsername] = useState(null);
+
+  const getUserProfile = async () => {
+    await axios
+      .get("http://127.0.0.1:3000/user/profile", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUsername(() => res.data.username);
+      });
+  };
+
+  async function Logout() {
+    await axios
+      .get("http://127.0.0.1:3000/user/logout", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUsername(null);
+      });
+  }
+
+  useEffect(() => {
+    // const controller = new AbortController();
+    // const signal = controller.signal;
+    getUserProfile();
+    // return () => controller.abort();
+  }, []);
   return (
     <header className="h-[70px] border px-8 bg-gray-50 w-full flex justify-between items-center">
       <div className="logo flex justify-between items-center">
@@ -42,41 +79,53 @@ const Header = () => {
         </div>
       </div>
       <nav className="flex relative">
-        <Link to="/login">
-          <button className="flex transition-all px-3 py-2 rounded-sm">
-            <LogIn className="text-zinc-500 mr-2 font-mono" />
-            <p className="text-zinc-500">
-              Login
-            </p>
-          </button>
-        </Link>
-        <button
-          onBlur={() => setProfile(false)}
-          onClick={() => setProfile(!Profile)}
-          className="bg-sky-600  w-[35px] h-[35px] hover:bg-sky-700 transition-all rounded-full ml-2"
-        >
-          <a href="#" className="font-medium text-white">
-            AB
-          </a>
-        </button>
-        <ul
-          className={`
+        {username ? (
+          <div className="flex justify-between items-center">
+            <Link to="/write">
+              <button className="flex transition-all px-3 py-2 rounded-sm">
+                <FilePenLine className="text-zinc-500 mr-2 font-mono" />
+                <p className="text-zinc-500">Write</p>
+              </button>
+            </Link>
+            <button
+              onClick={() => setProfile(!Profile)}
+              className="bg-sky-600  w-[35px] h-[35px] hover:bg-sky-700 transition-all rounded-full ml-2"
+            >
+              <a href="#" className="font-medium text-white">
+                AB
+              </a>
+            </button>
+            <ul
+              onMouseLeave={() => setProfile(false)}
+              className={`
           bg-white text-start absolute w-full z-[100] top-[55px] left-0 px-4 py-3 shadow-md
           ${Profile ? "block" : "hidden"}`}
-        >
-          <li className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800 mb-4">
-            <span className="mr-3">
-              <User></User>
-            </span>
-            Profile
-          </li>
-          <li className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800">
-            <span className="mr-3">
-              <LogOut></LogOut>
-            </span>
-            Log Out
-          </li>
-        </ul>
+            >
+              <li className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800 mb-4">
+                <span className="mr-3">
+                  <User></User>
+                </span>
+                Profile
+              </li>
+              <li
+                onClick={() => Logout()}
+                className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800"
+              >
+                <span className="mr-3">
+                  <LogOut></LogOut>
+                </span>
+                Log Out
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <Link to="/login">
+            <button className="flex transition-all px-3 py-2 rounded-sm">
+              <LogIn className="text-zinc-500 mr-2 font-mono" />
+              <p className="text-zinc-500">Login</p>
+            </button>
+          </Link>
+        )}
       </nav>
     </header>
   );
