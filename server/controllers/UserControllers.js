@@ -86,8 +86,9 @@ const profile = async (req, res) => {
 
 const logout = (req, res) => {
   console.log(req.cookies);
-  res.cookie("user_token", "");
+  res.cookie("user_token", "", cookieOptions);
   res.json({ message: "ok" });
 };
+
 
 export { register, login, profile, logout };

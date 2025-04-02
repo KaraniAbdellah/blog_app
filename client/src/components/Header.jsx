@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Search,
   LogIn,
@@ -9,12 +9,14 @@ import {
 } from "lucide-react";
 import { Link } from "react-router";
 import axios from "axios";
-import Cookie from "js-cookie";
+import { UserContext } from "../contexts/userContext";
+
 
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
   const [Profile, setProfile] = useState(false);
-  const [username, setUsername] = useState(null);
+  const [userInfo, setUserInfo] = useContext(UserContext);
+
 
   const getUserProfile = async () => {
     await axios
@@ -22,7 +24,7 @@ const Header = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setUsername(() => res.data.username);
+        setUserInfo(res.data);
       });
   };
 
@@ -32,9 +34,10 @@ const Header = () => {
         withCredentials: true,
       })
       .then((res) => {
-        setUsername(null);
+        setUserInfo({});
       });
   }
+  const username = userInfo.username;
 
   useEffect(() => {
     // const controller = new AbortController();
