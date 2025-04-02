@@ -1,6 +1,5 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
-import "../css_filies/nav.css";
 
 const Nav = () => {
     const handleActive = (e) => {

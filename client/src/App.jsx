@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
 import Loading from "./components/Loading";
+import CreateBlog from "./pages/createBlog";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { UserContext } from "./contexts/userContext";
@@ -17,6 +18,7 @@ function App() {
             <Route index element={<Home></Home>}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/loading" element={<Loading />}></Route>
+            <Route path="/write" element={<CreateBlog />}></Route>
           </Route>
         </Routes>
         <Toaster />

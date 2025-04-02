@@ -53,9 +53,10 @@ const login = async (req, res) => {
         process.env.SECRET_KEY
       );
       if (token) {
-        console.log(token);
-        // res.cookie("user_token", token, cookieOptions).json("ok");
-        return res.cookie("user_token", token, cookieOptions).json(token);
+        console.log(user);
+        return res
+          .cookie("user_token", token, cookieOptions)
+          .json({ id: user._id, username: user.username });
       }
     } else {
       return res.status(400).send(user);
@@ -89,6 +90,5 @@ const logout = (req, res) => {
   res.cookie("user_token", "", cookieOptions);
   res.json({ message: "ok" });
 };
-
 
 export { register, login, profile, logout };

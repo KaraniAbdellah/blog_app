@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { Chrome, AtSign, Lock, User, Eye, EyeOff } from "lucide-react";
 import { LoginPageSchema } from "../InputValidations/LoginPageInput";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { UserContext } from "../contexts/userContext";
+
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -11,6 +13,8 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [user, setUser] = useState({ username: "", email: "", password: "" });
   const [isValid, setIsValid] = useState(false);
+  const [userInfo, setUserInfo] = useContext(UserContext);
+
 
   const handleChange = () => {
     setIsLogin(!isLogin);
@@ -31,8 +35,7 @@ const LoginPage = () => {
             duration: 2000,
             style: { color: "#4BB543", fontWeight: "bold" },
           });
-          setIsValid(false);
-          navigate("/loading");
+          setIsValid(false); setUserInfo(res.data); navigate("/loading");
           setTimeout(() => {
             navigate("/");
           }, 2000);

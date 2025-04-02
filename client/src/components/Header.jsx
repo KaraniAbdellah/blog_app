@@ -7,7 +7,7 @@ import {
   LogOut,
   FilePenLine,
 } from "lucide-react";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import axios from "axios";
 import { UserContext } from "../contexts/userContext";
 
@@ -16,7 +16,7 @@ const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
   const [Profile, setProfile] = useState(false);
   const [userInfo, setUserInfo] = useContext(UserContext);
-
+  const navigate = useNavigate();
 
   const getUserProfile = async () => {
     await axios
@@ -35,6 +35,10 @@ const Header = () => {
       })
       .then((res) => {
         setUserInfo({});
+        navigate("/loading");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       });
   }
   const username = userInfo.username;
