@@ -20,11 +20,11 @@ const Nav = () => {
 
             <button onClick={(e) => handleActive(e)} className='mr-3 group text-gray-700 hover:text-gray-900 p-2 rounded-full relative'>
                 <span className='group-[.showMe]:before:absolute before:w-[70%] before:h-[1px] 
-                before:bg-zinc-900 group-[.showMe]:text-black group-[.showMe]:font-medium before:top-12'>Saved</span>
+                before:bg-zinc-900 group-[.showMe]:text-black group-[.showMe]:font-medium before:top-12'>Your Posts</span>
             </button>
             <button onClick={(e) => handleActive(e)} className='mr-3 group text-gray-700 hover:text-gray-900 p-2 rounded-full relative'>
                 <span className='group-[.showMe]:before:absolute before:w-[70%] before:h-[1px] 
-                before:bg-zinc-900 group-[.showMe]:text-black group-[.showMe]:font-medium before:top-12'>Follwing</span>
+                before:bg-zinc-900 group-[.showMe]:text-black group-[.showMe]:font-medium before:top-12'>Saved</span>
             </button>
         </nav>
     );
