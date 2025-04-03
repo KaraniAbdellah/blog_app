@@ -7,6 +7,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../contexts/userContext";
 import toast from "react-hot-toast";
+import { UseConvertTo64 } from '../hooks/useConverter';
 
 
 const CreateBlog = () => {
@@ -16,16 +17,6 @@ const CreateBlog = () => {
   const [image, setImage] = useState("");
   const [short_description, setShort_description] = useState("");
   const [userInfo, setUserInfo] = useContext(UserContext);
-  
-
-  function ConvertTo64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
 
   async function CreateBlog(BlogData) {
     console.log(BlogData);
@@ -36,7 +27,7 @@ const CreateBlog = () => {
 
   const handlePublish = async () => {
     // Convert Image to Base64
-    const ImageUrl = await ConvertTo64(image);
+    const ImageUrl = await UseConvertTo64(image);
     // Check The Inputs and Short Description Size
     // Make Data Form
     const BlogData = {

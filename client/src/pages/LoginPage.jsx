@@ -5,6 +5,8 @@ import { LoginPageSchema } from "../InputValidations/LoginPageInput";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { UserContext } from "../contexts/userContext";
+import profile from "../assests/profile.png";
+import { UseConvertTo64 } from '../hooks/useConverter';
 
 
 const LoginPage = () => {
@@ -14,13 +16,21 @@ const LoginPage = () => {
   const [user, setUser] = useState({ username: "", email: "", password: "" });
   const [isValid, setIsValid] = useState(false);
   const [userInfo, setUserInfo] = useContext(UserContext);
-
+  const [isImageSeted, setIsImageSeted] = useState(false);
+  const [ProfileImage, setProfileImage] = useState(profile);
 
   const handleChange = () => {
     setIsLogin(!isLogin);
     setShowPassword(false);
     setIsValid(false);
   };
+
+  const setUserProfile = async (file) => {
+    const imageUrl = await UseConvertTo64(file);
+    setIsImageSeted(true);
+    setProfileImage(imageUrl);
+    console.log(imageUrl);
+  } 
 
   const userLogin = async () => {
     try {
@@ -35,7 +45,9 @@ const LoginPage = () => {
             duration: 2000,
             style: { color: "#4BB543", fontWeight: "bold" },
           });
-          setIsValid(false); setUserInfo(res.data); navigate("/loading");
+          setIsValid(false);
+          setUserInfo(res.data);
+          navigate("/loading");
           setTimeout(() => {
             navigate("/");
           }, 2000);
@@ -90,7 +102,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-[calc(100vh-80px)]">
+    <div className="flex justify-center items-center w-full min-h-screen">
       <div className="bg-white lg:w-[40%] md:w-[60%] w-[90%] shadow-md rounded-md p-6">
         <h1 className="mb-10 text-center font-medium font-serif text-3xl">
           Join Crafting.
@@ -169,6 +181,13 @@ const LoginPage = () => {
           </form>
         ) : (
           <form onSubmit={(e) => handleSubmit(e)} className="text-center">
+            <div className="profile_image bg-gray-100 rounded-full w-[200px] h-[200px] flex justify-center items-center mx-auto my-5">
+              <input type="file" className="hidden" id="file-input" onChange={(e) => setUserProfile(e.target.files[0])}/>
+              <label htmlFor="file-input" className="cursor-pointer">
+                <span className="text-sm text-gray-500"><img className="w-[170px] h-[170px] rounded-full" src={ProfileImage} alt="" /></span>
+              </label>
+            </div>
+
             <div className="flex justify-start p-2 mb-4 items-center w-full email rounded-sm border-gray-300 border bg-gray-50">
               <User className="text-gray-300 font-medium mr-2" />
               <input
