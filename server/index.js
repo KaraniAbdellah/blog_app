@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 
 // Create REST API
 const rest_api = express();
+rest_api.use(express.json({ limit: '10mb' }));
 rest_api.use(cors({credentials: true, origin: true}));
 rest_api.use(express.json());
 rest_api.use(cookieParser());
