@@ -4,6 +4,10 @@ import JoditEditor from "jodit-react";
 import HTMLReactParser from "html-react-parser";
 import EditorConfig from "../config/EditorConfig";
 import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../contexts/userContext";
+import toast from "react-hot-toast";
+
 
 const CreateBlog = () => {
   const editor = useRef(null);
@@ -11,6 +15,8 @@ const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [short_description, setShort_description] = useState("");
+  const [userInfo, setUserInfo] = useContext(UserContext);
+  
 
   function ConvertTo64(file) {
     return new Promise((resolve, reject) => {
@@ -34,7 +40,9 @@ const CreateBlog = () => {
     // Check The Inputs and Short Description Size
     // Make Data Form
     const BlogData = {
+      owner: userInfo.id,
       blogTitle: title,
+      blogImage: ImageUrl,
       ownerImage: ImageUrl,
       shortDescription: short_description,
       contentBlog: content,
@@ -45,6 +53,10 @@ const CreateBlog = () => {
       commentsNumber: 0,
     };
     CreateBlog(BlogData);
+    toast("✅ Success Creating Blog", {
+      duration: 2000,
+      style: { color: "#4BB543", fontWeight: "bold" },
+    });
   };
 
   return (

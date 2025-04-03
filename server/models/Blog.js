@@ -1,37 +1,44 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
-const BlogSchema = new mongoose.Schema({
-  owner: {
-    type: String,
-    required: [true, "owner is Required"],
+const BlogSchema = new mongoose.Schema(
+  {
+    owner: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User'
+    },
+    ownerImage: {
+      type: String,
+      required: [true, "Image is Required"],
+    },
+    blogTitle: {
+      type: String,
+      required: [true, "blogTitle is Required"],
+    },
+    shortDescription: {
+      type: String,
+      required: [true, "shortDescription is Required"],
+    },
+    blogDate: {
+      type: String,
+      required: [true, "blogDate is Required"],
+    },
+    blogImage: {
+      type: String,
+      required: [true, "blogDate is Required"],
+    },
+    likesNumber: {
+      type: Number,
+      required: [true, "likesNumber is Required"],
+    },
+    commentsNumber: {
+      type: Number,
+      required: [true, "commentsNumber is Required"],
+    },
   },
-  ownerImage: {
-    type: String,
-    required: [true, "Image is Required"],
-  },
-  blogTitle: {
-    type: String,
-    required: [true, "blogTitle is Required"],
-  },
-  shortDescription: {
-    type: String,
-    required: [true, "shortDescription is Required"],
-  },
-  blogDate: {
-    type: String,
-    required: [true, "blogDate is Required"],
-  },
-  likesNumber: {
-    type: Number,
-    required: [true, "likesNumber is Required"],
-  },
-  commentsNumber: {
-    type: Number,
-    required: [true, "commentsNumber is Required"],
-  },
-}, {
-    timestamps: true
-});
+  {
+    timestamps: true,
+  }
+);
 
-const BlogModel = mongoose.model("Project", BlogSchema);
+const BlogModel = mongoose.model("Blogs", BlogSchema);
 export default BlogModel;
