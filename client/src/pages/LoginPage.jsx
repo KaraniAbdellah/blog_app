@@ -6,14 +6,18 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { UserContext } from "../contexts/userContext";
 import profile from "../assests/profile.png";
-import { UseConvertTo64 } from '../hooks/useConverter';
-
+import { UseConvertTo64 } from "../hooks/useConverter";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [user, setUser] = useState({ username: "", email: "", password: "" });
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+    userImage: "",
+  });
   const [isValid, setIsValid] = useState(false);
   const [userInfo, setUserInfo] = useContext(UserContext);
   const [isImageSeted, setIsImageSeted] = useState(false);
@@ -29,8 +33,9 @@ const LoginPage = () => {
     const imageUrl = await UseConvertTo64(file);
     setIsImageSeted(true);
     setProfileImage(imageUrl);
+    setUser((prev) => ({ ...prev, userImage: imageUrl }));
     console.log(imageUrl);
-  } 
+  };
 
   const userLogin = async () => {
     try {
@@ -93,7 +98,6 @@ const LoginPage = () => {
     // Here Input Validation With Yup
     const isValid = await LoginPageSchema.isValid(user);
     setIsValid(!isValid);
-    console.log(isValid);
     if (isLogin && isValid) {
       userLogin();
     } else if (!isLogin && isValid) {
@@ -182,9 +186,20 @@ const LoginPage = () => {
         ) : (
           <form onSubmit={(e) => handleSubmit(e)} className="text-center">
             <div className="profile_image bg-gray-100 rounded-full w-[200px] h-[200px] flex justify-center items-center mx-auto my-5">
-              <input type="file" className="hidden" id="file-input" onChange={(e) => setUserProfile(e.target.files[0])}/>
+              <input
+                type="file"
+                className="hidden"
+                id="file-input"
+                onChange={(e) => setUserProfile(e.target.files[0])}
+              />
               <label htmlFor="file-input" className="cursor-pointer">
-                <span className="text-sm text-gray-500"><img className="w-[170px] h-[170px] rounded-full" src={ProfileImage} alt="" /></span>
+                <span className="text-sm text-gray-500">
+                  <img
+                    className="w-[170px] h-[170px] rounded-full"
+                    src={ProfileImage}
+                    alt=""
+                  />
+                </span>
               </label>
             </div>
 

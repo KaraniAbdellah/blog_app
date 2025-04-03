@@ -6,8 +6,8 @@ import jwt from "jsonwebtoken";
 // @route Register POST /user/Register
 // @access Public
 const register = async (req, res) => {
-  const { username, email, password } = req.body;
-  if (!username && !email && !password) {
+  const { username, email, password, userImage } = req.body;
+  if (!username && !email && !password && !userImage) {
     res.status(400).send({ message: "All inputs required" });
   }
 
@@ -20,7 +20,9 @@ const register = async (req, res) => {
       username,
       email,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+      userImage: userImage,
     });
+    console.log(user);
     if (user) {
       return res.status(200).json(user);
     }
@@ -47,6 +49,7 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await UserModel.findOne({ email });
     const passOk = bcrypt.compareSync(password, user.password);
+    console.log(passOk);
     if (passOk && user) {
       const token = jwt.sign(
         { id: user._id, username: user.username },
@@ -54,9 +57,11 @@ const login = async (req, res) => {
       );
       if (token) {
         console.log(user);
-        return res
-          .cookie("user_token", token, cookieOptions)
-          .json({ id: user._id, username: user.username });
+
+        return res.cookie("user_token", token, cookieOptions).json({
+          id: user._id,
+          username: user.username,
+        });
       }
     } else {
       return res.status(400).send(user);
@@ -72,9 +77,14 @@ const login = async (req, res) => {
 const profile = async (req, res) => {
   const token = req.cookies.user_token;
   if (token) {
-    const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-    if (decodedToken) {
-      res.json(decodedToken);
+    const {id, username, iat } = jwt.verify(token, process.env.SECRET_KEY);
+    const user = await UserModel.findById(id);    
+    console.log("user = ", id);
+
+    if (id && username && iat && user) {
+      res.json({
+        id, username, iat, userImage: user.userImage,
+      });
     } else {
       res.status(400).send({ message: "Invalid Profile" });
     }

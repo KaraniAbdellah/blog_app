@@ -11,7 +11,6 @@ import { Link, Navigate, useNavigate } from "react-router";
 import axios from "axios";
 import { UserContext } from "../contexts/userContext";
 
-
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
   const [Profile, setProfile] = useState(false);
@@ -96,11 +95,9 @@ const Header = () => {
             </Link>
             <button
               onClick={() => setProfile(!Profile)}
-              className="bg-sky-600  w-[35px] h-[35px] hover:bg-sky-700 transition-all rounded-full ml-2"
+              className="w-[35px] h-[35px] hover:bg-sky-700 transition-all rounded-full ml-2"
             >
-              <a href="#" className="font-medium text-white">
-                AB
-              </a>
+              <img src={userInfo.userImage} className="w-full h-full rounded-full" alt="" />
             </button>
             <ul
               onMouseLeave={() => setProfile(false)}
