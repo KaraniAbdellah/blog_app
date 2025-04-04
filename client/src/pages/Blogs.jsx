@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Blog from "./Blog";
 import { BlogContext } from "../contexts/context";
+import axios from "axios";
 
 const Blogs = () => {
+  async function getBlogs() {
+    await axios.get("http://127.0.0.1:3000/blog/getBlogs").then((res) => {
+      console.log(res.data);
+    });
+  }
+
+  useEffect(() => {
+    getBlogs();
+  }, []);
+
   const blogs = [
     {
       id: 0,

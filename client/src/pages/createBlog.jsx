@@ -7,28 +7,44 @@ import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../contexts/userContext";
 import toast from "react-hot-toast";
-import { UseConvertTo64 } from '../hooks/useConverter';
-
+import { UseConvertTo64 } from "../hooks/useConverter";
 
 const CreateBlog = () => {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
-  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("content");
+  const [title, setTitle] = useState("title");
   const [image, setImage] = useState("");
-  const [short_description, setShort_description] = useState("");
+  const [short_description, setShort_description] =
+    useState("short description");
   const [userInfo, setUserInfo] = useContext(UserContext);
 
   async function CreateBlog(BlogData) {
     console.log(BlogData);
-    await axios.post("http://127.0.0.1:3000/blog/createBlog", BlogData).then((res) => {
-      console.log(res);
-    });
+    await axios
+      .post("http://127.0.0.1:3000/blog/createBlog", BlogData)
+      .then((res) => {
+        console.log(res);
+      });
   }
 
   const handlePublish = async () => {
+    // Check The Inputs and Short Description Size
+    console.log(short_description.length);
+    if (
+      !title ||
+      short_description.length > 200 ||
+      short_description.length === 0 ||
+      !content ||
+      !image
+    ) {
+      toast.error("All Input are required", {
+        duration: 2000,
+        style: { color: "rgb(239 68 68)", fontWeight: "bold" },
+      });
+      return;
+    }
     // Convert Image to Base64
     const ImageUrl = await UseConvertTo64(image);
-    // Check The Inputs and Short Description Size
     // Make Data Form
     const BlogData = {
       owner: userInfo.id,
@@ -44,7 +60,7 @@ const CreateBlog = () => {
       commentsNumber: 0,
     };
     CreateBlog(BlogData);
-    toast("✅ Success Creating Blog", {
+    toast.success("Success Creating Blog", {
       duration: 2000,
       style: { color: "#4BB543", fontWeight: "bold" },
     });
@@ -62,6 +78,13 @@ const CreateBlog = () => {
             type="text"
             placeholder="Title..."
           />
+          <p
+            className={`-mt-1 mb-3 text-red-500 font-medium ${
+              title ? "hidden" : "block"
+            }`}
+          >
+            this flied required
+          </p>
           <textarea
             value={short_description}
             onChange={(e) => setShort_description(e.target.value)}
@@ -70,6 +93,15 @@ const CreateBlog = () => {
             type="text"
             placeholder="Short Description..."
           ></textarea>
+          <p
+            className={`-mt-1 mb-3 text-red-500 font-medium ${
+              short_description.length > 200 || short_description.length === 0
+                ? "block"
+                : "hidden"
+            }`}
+          >
+            max is 200 characters
+          </p>
           <input
             onChange={(e) => setImage(e.target.files[0])}
             required
@@ -77,6 +109,13 @@ const CreateBlog = () => {
             type="file"
             placeholder="Title..."
           />
+          <p
+            className={`-mt-1 mb-3 text-red-500 font-medium ${
+              image ? "hidden" : "block"
+            }`}
+          >
+            this flied required
+          </p>
         </form>
         <div className="editor w-full">
           <JoditEditor
@@ -85,6 +124,13 @@ const CreateBlog = () => {
             onChange={(newContent) => setContent(newContent)}
             config={EditorConfig}
           ></JoditEditor>
+          <p
+            className={`mb-3 mt-1 text-red-500 font-medium ${
+              content ? "hidden" : "block"
+            }`}
+          >
+            this flied is required
+          </p>
 
           <div className="content p-3 bg-gray-100 border my-5">
             {HTMLReactParser(content)}

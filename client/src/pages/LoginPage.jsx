@@ -46,7 +46,7 @@ const LoginPage = () => {
           // Consider the cookie as credentials infomations
         })
         .then((res) => {
-          toast("✅ Login Success", {
+          toast.success("Login Success", {
             duration: 2000,
             style: { color: "#4BB543", fontWeight: "bold" },
           });
@@ -59,9 +59,9 @@ const LoginPage = () => {
         });
     } catch (error) {
       console.log(error);
-      toast("❌ Wrong Credentials", {
+      toast.error("Wrong Credentials", {
         duration: 2000,
-        style: { color: "#ED4337", fontWeight: "bold" },
+        style: { color: "#4BB543", fontWeight: "bold" },
       });
     }
   };
@@ -72,12 +72,12 @@ const LoginPage = () => {
         .post(`http://127.0.0.1:3000/user/register`, user)
         .then((res) => {
           if (res.data.message) {
-            toast("❌ Email Already Exit", {
+            toast.error("Email Already Exit", {
               duration: 2000,
               style: { color: "#ED4337", fontWeight: "bold" },
             });
           } else {
-            toast("✅ Registration Success", {
+            toast.success("Registration Success", {
               duration: 2000,
               style: { color: "#4BB543", fontWeight: "bold" },
             });
@@ -86,7 +86,7 @@ const LoginPage = () => {
           }
         });
     } catch (error) {
-      toast("❌ Registration Failed", {
+      toast.error("Registration Failed", {
         duration: 2000,
         style: { color: "#ED4337", fontWeight: "bold" },
       });
@@ -97,11 +97,19 @@ const LoginPage = () => {
     e.preventDefault();
     // Here Input Validation With Yup
     const isValid = await LoginPageSchema.isValid(user);
+    console.log(isValid);
     setIsValid(!isValid);
     if (isLogin && isValid) {
       userLogin();
-    } else if (!isLogin && isValid) {
+    }
+    if (!isLogin && isValid && user.userImage) {
       userRegister();
+    }
+    if (!isValid || (!user.userImage && !isLogin)) {
+      toast.error("All Input are required", {
+        duration: 2000,
+        style: { color: "rgb(239 68 68)", fontWeight: "bold" },
+      });
     }
   };
 
@@ -111,14 +119,6 @@ const LoginPage = () => {
         <h1 className="mb-10 text-center font-medium font-serif text-3xl">
           Join Crafting.
         </h1>
-        <p
-          className={`error_message mb-4 text-center text-red-700 ${
-            isValid ? "block" : "hidden"
-          }`}
-        >
-          password should be contain at least 6 characters
-        </p>
-
         <nav className="mb-5 flex justify-center items-center">
           <button
             onClick={() => handleChange()}
