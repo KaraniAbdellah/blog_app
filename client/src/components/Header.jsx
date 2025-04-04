@@ -10,6 +10,7 @@ import {
 import { Link, Navigate, useNavigate } from "react-router";
 import axios from "axios";
 import { UserContext } from "../contexts/userContext";
+import Loading from "./Loading";
 
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
@@ -34,6 +35,7 @@ const Header = () => {
       })
       .then((res) => {
         setUserInfo({});
+        setProfile(false);
         navigate("/loading");
         setTimeout(() => {
           navigate("/login");
@@ -93,14 +95,22 @@ const Header = () => {
                 <p className="text-zinc-500">Write</p>
               </button>
             </Link>
-            <button
-              onClick={() => setProfile(!Profile)}
-              className="w-[35px] h-[35px] hover:bg-sky-700 transition-all rounded-full ml-2"
-            >
-              <img src={userInfo.userImage} className="w-full h-full rounded-full" alt="" />
-            </button>
+            {userInfo.userImage ? (
+              <button
+                onClick={() => setProfile(!Profile)}
+                className="w-[35px] h-[35px] hover:bg-sky-700 transition-all rounded-full ml-2"
+              >
+                <img
+                  src={userInfo.userImage}
+                  className="w-full h-full rounded-full"
+                  alt="Profile Image"
+                />
+              </button>
+            ) : (
+              <p>loading...</p>
+            )}
+
             <ul
-              onMouseLeave={() => setProfile(false)}
               className={`
           bg-white text-start absolute w-full z-[100] top-[55px] left-0 px-4 py-3 shadow-md
           ${Profile ? "block" : "hidden"}`}
