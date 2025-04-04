@@ -7,7 +7,7 @@ const BlogRoute = express.Router();
 
 
 BlogRoute.post("/createBlog", createBlog);
-BlogRoute.post("/getBlogs", getBlogs);
+BlogRoute.get("/getBlogs", getBlogs);
 
 
 export default BlogRoute;

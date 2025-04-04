@@ -1,6 +1,4 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import BlogModel from '../models/Blog';
+import BlogModel from '../models/Blog.js';
 
 // @desc Create New Blog
 // @route Register POST /blog/createBlog
