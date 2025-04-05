@@ -5,6 +5,7 @@ import cors from "cors";
 import "dotenv/config";
 import BlogRoute from "./routes/BlogRoute.js";
 import UserRoute from "./routes/UserRoute.js";
+import SavedBlogRoute from "./routes/SavedBlogRoute.js";
 import cookieParser from "cookie-parser";
 
 
@@ -16,6 +17,7 @@ rest_api.use(express.json());
 rest_api.use(cookieParser());
 rest_api.use("/blog", BlogRoute);
 rest_api.use("/user", UserRoute);
+rest_api.use("/savedBlog", SavedBlogRoute);
 
 
 

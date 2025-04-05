@@ -7,16 +7,23 @@ import CreateBlog from "./pages/createBlog";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { UserContext } from "./contexts/userContext";
+import { blogChoiceContext } from "./contexts/blogChoiceContext";
+
 
 
 function App() {
   const [userInfo, setUserInfo] = useState({});
+  const [blogChoice, setBlogChoice] = useState("Your Blogs");
   return (
     <div className="w-full min-h-screen">
       <UserContext.Provider value={[userInfo, setUserInfo]}>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home></Home>}></Route>
+              <Route index element={
+                <blogChoiceContext.Provider value={[blogChoice, setBlogChoice]}>
+                  <Home></Home>
+                </blogChoiceContext.Provider>
+              }></Route>
             <Route path="/login" element={userInfo.username ? <Navigate to={"/"}></Navigate> : <LoginPage/>}></Route>
             <Route path="/loading" element={<Loading />}></Route>
             <Route path="/write" element={<CreateBlog />}></Route>

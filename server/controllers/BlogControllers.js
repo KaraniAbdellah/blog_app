@@ -19,7 +19,7 @@ const createBlog = async (req, res) => {
 
 
 
-// @desc Create New Blog
+// @desc Get User Blogs
 // @route Register POST /blog/getUserBlogs
 // @access Public
 const getUserBlogs = async (req, res) => {
@@ -37,7 +37,7 @@ const getUserBlogs = async (req, res) => {
 
 
 
-// @desc Create New Blog
+// @desc Get Random Blogs
 // @route Register POST /blog/getRandomBlogs
 // @access Public
 const getRandomBlogs = async (req, res) => {
@@ -51,11 +51,11 @@ const getRandomBlogs = async (req, res) => {
 
 
 
-// @desc Create New Blog
+// @desc Get Saved Blogs
 // @route Register POST /blog/getSavedBlogs
 // @access Public
 const getSavedBlogs = async (req, res) => {
-  const id = req.params.id;
+  console.log("Saved Blogs");
   // try {
   //   const blogs = await BlogModel.find();
   //   res.status(200).send(blogs);

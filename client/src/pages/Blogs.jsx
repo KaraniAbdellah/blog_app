@@ -4,14 +4,21 @@ import { BlogContext } from "../contexts/context";
 import axios from "axios";
 import Loading from "../components/Loading";
 import { UserContext } from "../contexts/userContext";
+import { blogChoiceContext } from "../contexts/blogChoiceContext";
+
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [IsLoading, setIsLoading] = useState(true);
   const [userInfo] = useContext(UserContext);
+  const [blogChoice] = useContext(blogChoiceContext);
 
   // This Is Not Not Blogs that was created by User
   async function getRandomBlogs() {
+    setBlogs([]);
+    console.log("Get Random Blogs");
+    console.log(blogs);
+    console.log(blogChoice);
     await axios
       .get("http://127.0.0.1:3000/blog/getRandomBlogs")
       .then((res) => {
@@ -25,6 +32,10 @@ const Blogs = () => {
 
   // This Is The blogs That Was Saved From User
   async function getSavedBlogs() {
+    setBlogs([]);
+    console.log("Get Saved Blogs");
+    console.log(blogs);
+    console.log(blogChoice);
     await axios
       .get("http://127.0.0.1:3000/blog/getSavedBlogs")
       .then((res) => {
@@ -38,6 +49,10 @@ const Blogs = () => {
 
   // This Is The blogs That Was Saved From User
   async function getUserBlogs() {
+    setBlogs([]);
+    console.log("Get User Blogs");
+    console.log(blogs);
+    console.log(blogChoice);
     await axios
       .get(`http://127.0.0.1:3000/blog/getUserBlogs/${userInfo.id}`)
       .then((res) => {
@@ -51,10 +66,21 @@ const Blogs = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.id) {
-      getUserBlogs();
+      switch (blogChoice) {
+        case "Saved":
+          getSavedBlogs();
+          break;
+        case "For You":
+          getRandomBlogs();
+          break;
+        case "Your Blogs":
+          getUserBlogs();
+          break;
+        default:
+          break;
+      }
     }
-  }, [userInfo]);
-  
+  }, [userInfo, blogChoice]);
 
   // const blogs = [
   //   {
@@ -139,7 +165,11 @@ const Blogs = () => {
 
   return (
     <div className="blogs mt-5 w-full mr-4">
-      {IsLoading || blogs.length === 0 ? (
+      {blogs.length === 0 ? (
+        <p class="text-center text-gray-500 text-xl mt-10">
+          No blog posts available yet.
+        </p>
+      ) : IsLoading ? (
         <Loading></Loading>
       ) : (
         blogs.map((blog, index) => {
