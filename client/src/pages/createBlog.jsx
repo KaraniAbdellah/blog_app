@@ -60,6 +60,7 @@ const CreateBlog = () => {
       })} ${new Date().getDate()}, ${new Date().getFullYear()}`,
       likesNumber: 0,
       commentsNumber: 0,
+      isSaved: false,
     };
     CreateBlog(BlogData);
     toast.success("Success Creating Blog", {

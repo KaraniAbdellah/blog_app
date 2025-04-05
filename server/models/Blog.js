@@ -34,6 +34,10 @@ const BlogSchema = new mongoose.Schema(
       type: Number,
       required: [true, "comments Number is Required"],
     },
+    isSaved: {
+      type: Boolean,
+      required: [true, "isSaved Is required"]
+    }
   },
   {
     timestamps: true,
