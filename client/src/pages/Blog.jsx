@@ -79,13 +79,17 @@ const Blog = () => {
             </div>
           </div>
 
-          <button
-            className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
-            aria-label="Save this blog post"
-            onClick={() => SaveBlog(blog._id)}
-          >
-            <BookmarkCheckBookmarkCheck size={18} />
-          </button>
+          {blogChoice != "Saved" ? (
+            <button
+              className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
+              aria-label="Save this blog post"
+              onClick={() => SaveBlog(blog._id)}
+            >
+              <Bookmark size={18} />
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
 

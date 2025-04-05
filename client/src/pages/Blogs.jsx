@@ -16,9 +16,6 @@ const Blogs = () => {
   // This Is Not Not Blogs that was created by User
   async function getRandomBlogs() {
     setBlogs([]);
-    console.log("Get Random Blogs");
-    console.log(blogs);
-    console.log(blogChoice);
     await axios
       .get("http://127.0.0.1:3000/blog/getRandomBlogs", {
         withCredentials: true
@@ -35,16 +32,13 @@ const Blogs = () => {
   // This Is The blogs That Was Saved From User
   async function getSavedBlogs() {
     setBlogs([]);
-    console.log("Get Saved Blogs");
-    console.log(blogs);
-    console.log(blogChoice);
     await axios
       .get("http://127.0.0.1:3000/save/getSavedBlog", {
         withCredentials: true // for send the set-cookie header
       })
       .then((res) => {
         console.log(res.data);
-        // setBlogs(res.data);
+        setBlogs(res.data);
       })
       .finally(() => {
         setIsLoading(false);
@@ -54,9 +48,6 @@ const Blogs = () => {
   // This Is The blogs That Was Saved From User
   async function getUserBlogs() {
     setBlogs([]);
-    console.log("Get User Blogs");
-    console.log(blogs);
-    console.log(blogChoice);
     await axios
       .get(`http://127.0.0.1:3000/blog/getUserBlogs/${userInfo.id}`, {
         withCredentials: true

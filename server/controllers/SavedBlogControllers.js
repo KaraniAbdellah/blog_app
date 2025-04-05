@@ -9,7 +9,13 @@ const getSavedBlog = async (req, res) => {
   const token = req.cookies.user_token;
   try {
     const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
-
+    console.log("Hello World");
+    const savedBlogs = await SavedModel.find({user: isTokenValid.id}).populate("blog");
+    const blogs = [];
+    savedBlogs.map((sBlog) => {
+        blogs.push(sBlog.blog);
+    });
+    res.status(200).send(blogs);
   } catch (error) {
     res.status(400).send({ message: "Can Not Get Saved Blog" });
   }
