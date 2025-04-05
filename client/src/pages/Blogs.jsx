@@ -1,16 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Blog from "./Blog";
 import { BlogContext } from "../contexts/context";
 import axios from "axios";
 import Loading from "../components/Loading";
+import { UserContext } from "../contexts/userContext";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [IsLoading, setIsLoading] = useState(true);
-  
-  async function getBlogs() {
+  const [userInfo] = useContext(UserContext);
+
+  // This Is Not Not Blogs that was created by User
+  async function getRandomBlogs() {
     await axios
-      .get("http://127.0.0.1:3000/blog/getBlogs")
+      .get("http://127.0.0.1:3000/blog/getRandomBlogs")
+      .then((res) => {
+        console.log(res.data);
+        setBlogs(res.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  // This Is The blogs That Was Saved From User
+  async function getSavedBlogs() {
+    await axios
+      .get("http://127.0.0.1:3000/blog/getSavedBlogs")
+      .then((res) => {
+        console.log(res.data);
+        setBlogs(res.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
+  // This Is The blogs That Was Saved From User
+  async function getUserBlogs() {
+    await axios
+      .get(`http://127.0.0.1:3000/blog/getUserBlogs/${userInfo.id}`)
       .then((res) => {
         console.log(res.data);
         setBlogs(res.data);
@@ -21,8 +50,11 @@ const Blogs = () => {
   }
 
   useEffect(() => {
-    getBlogs();
-  }, []);
+    if (userInfo && userInfo.id) {
+      getUserBlogs();
+    }
+  }, [userInfo]);
+  
 
   // const blogs = [
   //   {
@@ -107,7 +139,7 @@ const Blogs = () => {
 
   return (
     <div className="blogs mt-5 w-full mr-4">
-      {IsLoading ? (
+      {IsLoading || blogs.length === 0 ? (
         <Loading></Loading>
       ) : (
         blogs.map((blog, index) => {

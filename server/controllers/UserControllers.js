@@ -79,7 +79,6 @@ const profile = async (req, res) => {
   if (token) {
     const {id, username, iat } = jwt.verify(token, process.env.SECRET_KEY);
     const user = await UserModel.findById(id);    
-    console.log("user = ", id);
 
     if (id && username && iat && user) {
       res.json({

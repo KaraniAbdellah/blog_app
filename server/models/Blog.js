@@ -28,11 +28,11 @@ const BlogSchema = new mongoose.Schema(
     },
     likesNumber: {
       type: Number,
-      required: [true, "likesNumber is Required"],
+      required: [true, "likes Number is Required"],
     },
     commentsNumber: {
       type: Number,
-      required: [true, "commentsNumber is Required"],
+      required: [true, "comments Number is Required"],
     },
   },
   {

@@ -21,7 +21,9 @@ const CreateBlog = () => {
   async function CreateBlog(BlogData) {
     console.log(BlogData);
     await axios
-      .post("http://127.0.0.1:3000/blog/createBlog", BlogData)
+      .post("http://127.0.0.1:3000/blog/createBlog", BlogData, {
+        withCredentials: true,
+      })
       .then((res) => {
         console.log(res);
       });

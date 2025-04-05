@@ -5,10 +5,11 @@ import { UserContext } from "../contexts/userContext";
 
 const Blog = () => {
   const blog = useContext(BlogContext);
-  const [userInfo] = useContext(UserContext); 
+  console.log(blog);
+  const [userInfo] = useContext(UserContext);
 
   return (
-    <article 
+    <article
       id={blog._id} 
       className="blog w-full border-b py-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center"
     >
@@ -18,13 +19,13 @@ const Blog = () => {
             <img
               className="w-8 h-8 rounded-full mr-2 object-cover"
               src={userInfo.userImage}
-              alt={`${blog.owner || 'User'}'s profile`}
+              alt={`${userInfo.username || 'User'}'s profile`}
             />
           ) : (
             <div className="w-8 h-8 rounded-full mr-2 bg-gray-200" aria-hidden="true" />
           )}
           <h3 className="font-semibold text-zinc-800">
-            {blog.owner || "Anonymous"}
+            {userInfo.username || "Anonymous"}
           </h3>
         </header>
         

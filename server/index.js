@@ -16,8 +16,6 @@ rest_api.use(express.json());
 rest_api.use(cookieParser());
 rest_api.use("/blog", BlogRoute);
 rest_api.use("/user", UserRoute);
-// rest_api.use("/saved", UserRoute);
-// rest_api.use("/listePosts", UserRoute);
 
 
 

@@ -61,7 +61,7 @@ const LoginPage = () => {
       console.log(error);
       toast.error("Wrong Credentials", {
         duration: 2000,
-        style: { color: "#4BB543", fontWeight: "bold" },
+        style: { color: "#ED4337", fontWeight: "bold" },
       });
     }
   };
