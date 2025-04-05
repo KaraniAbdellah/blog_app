@@ -31,20 +31,13 @@ const Blog = () => {
     >
       <div className="info flex-1 md:w-3/4 pr-4">
         <header className="user_info mb-2 flex justify-start items-center">
-          {userInfo?.userImage ? (
-            <img
-              className="w-8 h-8 rounded-full mr-2 object-cover"
-              src={userInfo.userImage}
-              alt={`${userInfo.username || "User"}'s profile`}
-            />
-          ) : (
-            <div
-              className="w-8 h-8 rounded-full mr-2 bg-gray-200"
-              aria-hidden="true"
-            />
-          )}
+          <img
+            className="w-8 h-8 rounded-full mr-2 object-cover"
+            src={blog.owner.userImage}
+            alt={`User profile`}
+          />
           <h3 className="font-semibold text-zinc-800">
-            {userInfo.username || "Anonymous"}
+            { blog.owner.username || "Anonymous"}
           </h3>
         </header>
 

@@ -43,7 +43,7 @@ const getRandomBlogs = async (req, res) => {
   const token = req.cookies.user_token;
   try {
     const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
-    const blogs = await BlogModel.find();
+    const blogs = await BlogModel.find().populate("owner");
     res.status(200).send(blogs);
   } catch (error) {
     res.status(400).send({ message: "Can Not Create This Blog" + error });

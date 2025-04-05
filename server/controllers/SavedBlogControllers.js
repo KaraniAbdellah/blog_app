@@ -1,6 +1,7 @@
 import SavedModel from "../models/Saved.js";
 import BlogModel from "../models/Blog.js";
 import jwt from "jsonwebtoken";
+import UserModel from "../models/User.js";
 
 // @desc Save Blog
 // @route Register POST /saved/getSavedBlog
@@ -10,11 +11,18 @@ const getSavedBlog = async (req, res) => {
   try {
     const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
     console.log("Hello World");
-    const savedBlogs = await SavedModel.find({user: isTokenValid.id}).populate("blog");
-    const blogs = [];
-    savedBlogs.map((sBlog) => {
-        blogs.push(sBlog.blog);
-    });
+    const savedBlogs = await SavedModel.find({ owner: isTokenValid.id })
+      .populate("blog")
+      .populate("owner");
+
+    const blogs = await Promise.all(
+      savedBlogs.map(async (sBlog) => {
+        const blogOwner = await UserModel.findById(sBlog.blog.owner);
+        sBlog.blog.owner = blogOwner;
+        return sBlog.blog;
+      })
+    );
+
     res.status(200).send(blogs);
   } catch (error) {
     res.status(400).send({ message: "Can Not Get Saved Blog" });
@@ -30,7 +38,7 @@ const saveBlog = async (req, res) => {
   try {
     const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
     const savedBlog = await SavedModel.create({
-      user: isTokenValid.id,
+      owner: isTokenValid.id,
       blog: blogId,
     });
     res.status(200).send(savedBlog);

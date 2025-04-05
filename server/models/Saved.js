@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const SavedBlogSchema = new mongoose.Schema(
   {
-    user: {
+    owner: {
       type: mongoose.Types.ObjectId,
       ref: "User",
       required: true,
