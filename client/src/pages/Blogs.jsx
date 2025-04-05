@@ -20,7 +20,9 @@ const Blogs = () => {
     console.log(blogs);
     console.log(blogChoice);
     await axios
-      .get("http://127.0.0.1:3000/blog/getRandomBlogs")
+      .get("http://127.0.0.1:3000/blog/getRandomBlogs", {
+        withCredentials: true
+      })
       .then((res) => {
         console.log(res.data);
         setBlogs(res.data);
@@ -37,10 +39,12 @@ const Blogs = () => {
     console.log(blogs);
     console.log(blogChoice);
     await axios
-      .get("http://127.0.0.1:3000/blog/getSavedBlogs")
+      .get("http://127.0.0.1:3000/save/getSavedBlog", {
+        withCredentials: true // for send the set-cookie header
+      })
       .then((res) => {
         console.log(res.data);
-        setBlogs(res.data);
+        // setBlogs(res.data);
       })
       .finally(() => {
         setIsLoading(false);
@@ -54,7 +58,9 @@ const Blogs = () => {
     console.log(blogs);
     console.log(blogChoice);
     await axios
-      .get(`http://127.0.0.1:3000/blog/getUserBlogs/${userInfo.id}`)
+      .get(`http://127.0.0.1:3000/blog/getUserBlogs/${userInfo.id}`, {
+        withCredentials: true
+      })
       .then((res) => {
         console.log(res.data);
         setBlogs(res.data);

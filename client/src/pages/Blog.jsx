@@ -1,13 +1,28 @@
 import React, { useContext } from "react";
-import { ThumbsUp, MessageCircle, Bookmark } from "lucide-react";
+import { ThumbsUp, MessageCircle, Bookmark, BookmarkCheck } from "lucide-react";
 import { BlogContext } from "../contexts/context";
 import { UserContext } from "../contexts/userContext";
 import { blogChoiceContext } from "../contexts/blogChoiceContext";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const Blog = () => {
   const blog = useContext(BlogContext);
   const [userInfo] = useContext(UserContext);
   const [blogChoice] = useContext(blogChoiceContext);
+
+  const SaveBlog = async (blogId) => {
+    await axios
+      .get(`http://127.0.0.1:3000/save/savedBlog/${blogId}`, {
+        withCredentials: true, // for send the set-cookie header
+      })
+      .then((res) => {
+        toast.success("Blog Saved Succesfully", {
+          duration: 2000,
+          style: { color: "#4BB543", fontWeight: "bold" },
+        });
+      });
+  };
 
   return (
     <article
@@ -67,9 +82,9 @@ const Blog = () => {
           <button
             className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
             aria-label="Save this blog post"
-            onClick={() => console.log(`Saving blog post: ${blog._id}`)}
+            onClick={() => SaveBlog(blog._id)}
           >
-            <Bookmark size={18} />
+            <BookmarkCheckBookmarkCheck size={18} />
           </button>
         </div>
       </div>

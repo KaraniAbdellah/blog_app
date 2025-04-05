@@ -17,16 +17,16 @@ const createBlog = async (req, res) => {
   }
 };
 
-
-
 // @desc Get User Blogs
-// @route Register POST /blog/getUserBlogs
-// @access Public
+// @route Register GET /blog/getUserBlogs
+// @access Private
 const getUserBlogs = async (req, res) => {
   console.log("Get User Blogs");
   const id = req.params.id;
+  const token = req.cookies.user_token;
   try {
-    const blogs = await BlogModel.find({owner: id}).populate("owner");
+    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
+    const blogs = await BlogModel.find({ owner: id }).populate("owner");
     console.log(blogs);
 
     res.status(200).send(blogs);
@@ -36,12 +36,13 @@ const getUserBlogs = async (req, res) => {
 };
 
 
-
 // @desc Get Random Blogs
-// @route Register POST /blog/getRandomBlogs
-// @access Public
+// @route Register GET /blog/getRandomBlogs
+// @access Private
 const getRandomBlogs = async (req, res) => {
+  const token = req.cookies.user_token;
   try {
+    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
     const blogs = await BlogModel.find();
     res.status(200).send(blogs);
   } catch (error) {
@@ -49,19 +50,4 @@ const getRandomBlogs = async (req, res) => {
   }
 };
 
-
-
-// @desc Get Saved Blogs
-// @route Register POST /blog/getSavedBlogs
-// @access Public
-const getSavedBlogs = async (req, res) => {
-  console.log("Saved Blogs");
-  // try {
-  //   const blogs = await BlogModel.find();
-  //   res.status(200).send(blogs);
-  // } catch (error) {
-  //   res.status(400).send({ message: "Can Not Create This Blog" + error });
-  // }
-};
-
-export { createBlog, getUserBlogs, getSavedBlogs, getRandomBlogs };
+export { createBlog, getUserBlogs, getRandomBlogs };
