@@ -14,6 +14,7 @@ import { blogChoiceContext } from "./contexts/blogChoiceContext";
 function App() {
   const [userInfo, setUserInfo] = useState({});
   const [blogChoice, setBlogChoice] = useState("Your Blogs");
+  
   return (
     <div className="w-full min-h-screen">
       <UserContext.Provider value={[userInfo, setUserInfo]}>

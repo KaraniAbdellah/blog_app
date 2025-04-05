@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { ThumbsUp, MessageCircle, Bookmark, BookmarkCheck } from "lucide-react";
+import {
+  ThumbsUp,
+  MessageCircle,
+  Bookmark,
+  BookmarkCheck,
+  Delete,
+  TrashIcon,
+} from "lucide-react";
 import { BlogContext } from "../contexts/context";
 import { UserContext } from "../contexts/userContext";
 import { blogChoiceContext } from "../contexts/blogChoiceContext";
@@ -12,18 +19,26 @@ const Blog = () => {
   const [blogChoice] = useContext(blogChoiceContext);
 
   const SaveBlog = async (blogId) => {
-    await axios
-      .get(`http://127.0.0.1:3000/save/savedBlog/${blogId}`, {
-        withCredentials: true, // for send the set-cookie header
-      })
-      .then((res) => {
-        toast.success("Blog Saved Succesfully", {
-          duration: 2000,
-          style: { color: "#4BB543", fontWeight: "bold" },
+    
+    try {
+      await axios
+        .get(`http://127.0.0.1:3000/save/savedBlog/${blogId}`, {
+          withCredentials: true, // for send the set-cookie header
+        })
+        .then((res) => {
+          toast.success("Blog Saved Succesfully", {
+            duration: 2000,
+            style: { color: "#4BB543", fontWeight: "bold" },
+          });
         });
-      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  const DeleteSavedBlog = async (blogId) => {};
+  const DeleteUserBlog = async (blogId) => {};
+  
   return (
     <article
       id={blog._id}
@@ -37,7 +52,7 @@ const Blog = () => {
             alt={`User profile`}
           />
           <h3 className="font-semibold text-zinc-800">
-            { blog.owner.username || "Anonymous"}
+            {blog.owner.username || "Anonymous"}
           </h3>
         </header>
 
@@ -72,13 +87,29 @@ const Blog = () => {
             </div>
           </div>
 
-          {blogChoice != "Saved" ? (
+          {blog.isSaved === false? (
             <button
               className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
               aria-label="Save this blog post"
               onClick={() => SaveBlog(blog._id)}
             >
               <Bookmark size={18} />
+            </button>
+          ) : blogChoice === "Saved" ? (
+            <button
+              onClick={() => DeleteSavedBlog(blog._id)}
+              className="save-button flex items-center text-zinc-600 hover:text-red-600 transition-colors"
+              aria-label="Save this blog post"
+            >
+              <BookmarkCheck size={18} />
+            </button>
+          ) : blogChoice === "Your Blogs" ? (
+            <button
+              onClick={() => DeleteUserBlog(blog._id)}
+              className="save-button flex items-center text-zinc-600 hover:text-red-600 transition-colors"
+              aria-label="Save this blog post"
+            >
+              <TrashIcon size={18} />
             </button>
           ) : (
             ""

@@ -40,6 +40,7 @@ const getUserBlogs = async (req, res) => {
 // @access Private
 const getRandomBlogs = async (req, res) => {
   try {
+    // Must Get Just 10 Blogs
     const blogs = await BlogModel.find().populate("owner");
     res.status(200).send(blogs);
   } catch (error) {

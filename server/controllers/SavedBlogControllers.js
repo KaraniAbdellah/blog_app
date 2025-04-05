@@ -41,6 +41,14 @@ const saveBlog = async (req, res) => {
       owner: isTokenValid.id,
       blog: blogId,
     });
+
+    const blogEdited = await BlogModel.findByIdAndUpdate(
+      blogId,
+      { isSaved: true },
+      { new: true }
+    );
+    console.log(blogEdited);
+
     res.status(200).send(savedBlog);
   } catch (error) {
     res.status(400).send({ message: "Can not Saved This Blog" });
