@@ -7,7 +7,9 @@ function Blog_Details() {
   const getBlogDetails = async () => {
       try {
         await axios
-          .get(`http://127.0.0.1:3000/blog/getBlogById/${params.id}`)
+          .get(`http://127.0.0.1:3000/blog/getBlogById/${params.id}`, {
+            withCredentials: true,
+          })
           .then((res) => {
             console.log(res.data);
           });

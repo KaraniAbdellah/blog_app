@@ -51,7 +51,7 @@ const getRandomBlogs = async (req, res) => {
 
 
 // @desc Get Random Blogs
-// @route Register GET /blog/getRandomBlogs
+// @route Register DELETE /blog/deleteBlog
 // @access Private
 const deleteBlog = async (req, res) => {
   const token = req.cookies.user_token;
@@ -71,4 +71,26 @@ const deleteBlog = async (req, res) => {
   }
 };
 
-export { createBlog, getUserBlogs, getRandomBlogs, deleteBlog };
+// @desc Get Random Blogs
+// @route Register GET /blog/getBlogById/:id
+// @access Private
+const getBlogById = async (req, res) => {
+  const token = req.cookies.user_token;
+  const blogId = req.params.id;
+  console.log("We Must Delete The Blog");
+  console.log(blogId);
+  console.log(token);
+  try {
+    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
+    console.log(isTokenValid);
+    const blogDetails = await BlogModel.findById(blogId);
+    if (blogDetails) {
+      res.status(200).json(blogDetails);
+      return;
+    }
+  } catch (error) {
+    res.status(400).send({ message: "Can not Find This Blog" });
+  }
+};
+
+export { createBlog, getUserBlogs, getRandomBlogs, deleteBlog, getBlogById };
