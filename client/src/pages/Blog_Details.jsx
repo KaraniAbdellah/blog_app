@@ -44,16 +44,16 @@ function Blog_Details() {
 
   const AddComments = async () => {
     console.log(comments);
-    // try {
-    //   await axios.get(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {
-    //     withCredentials: true,
-    //   }).then((res) => {
-    //     console.log(res.data);
-    //     console.log(comments);
-    //   })
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      await axios.post(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {comments: comments},{
+        withCredentials: true,
+      }).then((res) => {
+        console.log(res.data);
+        console.log(comments);
+      })
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

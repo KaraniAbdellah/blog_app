@@ -128,21 +128,23 @@ const addLike = async (req, res) => {
 // @route Register POST /blog/addComment/:id
 // @access Private
 const addComment = async (req, res) => {
+  console.log("Hello World");
   const id = req.params.id;
-  const token = req.cookies.user_token;
+  // const token = req.cookies.user_token;
+  console.log(req.body);
 
   try {
-    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
-    const oldBlog = await BlogModel.findById(id);
-    const blog = await BlogModel.findByIdAndUpdate(
-      id,
-      { commentsNumber: oldBlog.commentsNumber + 1 },
-      { new: true }
-    );
-    res.status(200).send({message: "Comment Add Succefully"});
+    // const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
+    // const oldBlog = await BlogModel.findById(id);
+    // const blog = await BlogModel.findByIdAndUpdate(
+    //   id,
+    //   { commentsNumber: oldBlog.commentsNumber + 1 },
+    //   { new: true }
+    // );
+    // res.status(200).send({message: "Comment Add Succefully"});
   } catch (error) {
-    res.status(400).send({error: error});
-    console.log(error);
+    // res.status(400).send({error: error});
+    // console.log(error);
   }
 };
 

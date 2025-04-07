@@ -41,6 +41,10 @@ const BlogSchema = new mongoose.Schema(
     isSaved: {
       type: Boolean,
       required: [true, "isSaved Is required"]
+    },
+    Commentes: {
+      type: Array,
+      required: ["Commentes is required"]
     }
   },
   {
