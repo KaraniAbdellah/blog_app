@@ -5,7 +5,9 @@ import {
   getUserBlogs,
   getRandomBlogs,
   deleteBlog, 
-  getBlogById
+  getBlogById,
+  addLike,
+  addComment
 } from "../controllers/BlogControllers.js";
 
 const BlogRoute = express.Router();
@@ -15,6 +17,8 @@ BlogRoute.get("/getUserBlogs/:id", getUserBlogs);
 BlogRoute.get("/getRandomBlogs", getRandomBlogs);
 BlogRoute.delete("/deleteBlog/:id", deleteBlog);
 BlogRoute.get("/getBlogById/:id", getBlogById);
+BlogRoute.post("/addLike/:id", addLike);
+BlogRoute.post("/addComment/:id", addComment);
 
 
 export default BlogRoute;

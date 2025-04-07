@@ -2,6 +2,8 @@ import BlogModel from "../models/Blog.js";
 import jwt from "jsonwebtoken";
 import SavedBlogModel from "../models/Saved.js";
 
+
+
 // @desc Create New Blog
 // @route Register POST /blog/createBlog
 // @access Private
@@ -17,6 +19,8 @@ const createBlog = async (req, res) => {
     res.status(400).send({ message: "Can Not Create This Blog" + error });
   }
 };
+
+
 
 // @desc Get User Blogs
 // @route Register GET /blog/getUserBlogs
@@ -36,6 +40,8 @@ const getUserBlogs = async (req, res) => {
   }
 };
 
+
+
 // @desc Get Random Blogs
 // @route Register GET /blog/getRandomBlogs
 // @access Private
@@ -48,6 +54,7 @@ const getRandomBlogs = async (req, res) => {
     res.status(400).send({ message: "Can Not Create This Blog" + error });
   }
 };
+
 
 
 // @desc Get Random Blogs
@@ -63,13 +70,15 @@ const deleteBlog = async (req, res) => {
     // Delete Blog From Blog Model
     const DeletedBlog = await BlogModel.findByIdAndDelete(blogId);
     // Delete Blog From Saved Item
-    const DeleteSavedBlog = await SavedBlogModel.deleteOne({blog: blogId});
+    const DeleteSavedBlog = await SavedBlogModel.deleteOne({ blog: blogId });
 
-    res.status(200).json({message: "Blog Deleted Succefully"});
+    res.status(200).json({ message: "Blog Deleted Succefully" });
   } catch (error) {
     res.status(400).send({ message: "Can not Saved This Blog" });
   }
 };
+
+
 
 // @desc Get Random Blogs
 // @route Register GET /blog/getBlogById/:id
@@ -89,4 +98,61 @@ const getBlogById = async (req, res) => {
   }
 };
 
-export { createBlog, getUserBlogs, getRandomBlogs, deleteBlog, getBlogById };
+
+
+// @desc Get Random Blogs
+// @route Register POST /blog/addLike/:id
+// @access Private
+const addLike = async (req, res) => {
+  const token = req.cookies.user_token;
+  const id = req.params.id;
+  console.log("token is ", token);
+
+  try {
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
+    const oldBlog = await BlogModel.findById(id);
+    const blog = await BlogModel.findByIdAndUpdate(
+      id,
+      { likesNumber: oldBlog.likesNumber + 1 },
+      { new: true }
+    );
+    
+    res.status(200).send({message: "Like Add Succefully"});
+  } catch (error) {
+    res.status(400).send({error: error});
+    console.log(error);
+  }
+};
+
+// @desc Get Random Blogs
+// @route Register POST /blog/addComment/:id
+// @access Private
+const addComment = async (req, res) => {
+  const id = req.params.id;
+  const token = req.cookies.user_token;
+  console.log("token is ", token);
+
+  try {
+    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
+    const oldBlog = await BlogModel.findById(id);
+    const blog = await BlogModel.findByIdAndUpdate(
+      id,
+      { commentsNumber: oldBlog.commentsNumber + 1 },
+      { new: true }
+    );
+    res.status(200).send({message: "Comment Add Succefully"});
+  } catch (error) {
+    res.status(400).send({error: error});
+    console.log(error);
+  }
+};
+
+export {
+  createBlog,
+  getUserBlogs,
+  getRandomBlogs,
+  deleteBlog,
+  getBlogById,
+  addLike,
+  addComment,
+};

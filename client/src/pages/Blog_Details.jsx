@@ -4,6 +4,7 @@ import axios from "axios";
 import Loading from "../components/Loading";
 import { MessageCircle, ThumbsUp } from "lucide-react";
 
+
 function Blog_Details() {
   const params = useParams();
   const [blogDetails, setBlogDetails] = useState();
@@ -28,16 +29,21 @@ function Blog_Details() {
 
   const AddLikes = async () => {
     try {
-      await axios.post(`http:/127.0.0.1/3000/blog/addLike/${params.id}`).then((res) => {
+      await axios.post(`http://127.0.0.1:3000/blog/addLike/${params.id}`, {
+        withCredentials: true,
+      }).then((res) => {
         console.log(res.data);
       })
     } catch (error) {
       console.log(error);
     }
   }
+
   const AddComments = async () => {
     try {
-      await axios.post(`http:/127.0.0.1/3000/blog/addComment/${params.id}`).then((res) => {
+      await axios.post(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {
+        withCredentials: true,
+      }).then((res) => {
         console.log(res.data);
       })
     } catch (error) {
@@ -83,10 +89,10 @@ function Blog_Details() {
                 <MessageCircle className="w-5 h-5" />
                 <p>{blogDetails.commentsNumber}</p>
               </div>
-              <div onClick={() => AddLikes()} className="cursor-pointer flex items-center gap-1">
+              <button onClick={() => AddLikes()} className="cursor-pointer flex items-center gap-1">
                 <ThumbsUp className="w-5 h-5" />
                 <p>{blogDetails.likesNumber}</p>
-              </div>
+              </button>
             </div>
             <hr className="border-gray-300" />
 
