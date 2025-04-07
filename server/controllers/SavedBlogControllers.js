@@ -36,7 +36,16 @@ const saveBlog = async (req, res) => {
   const token = req.cookies.user_token;
   const blogId = req.params.id;
   try {
-    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
+
+    const IsThisBlogSaved = await SavedModel.findOne({blog: blogId});
+    console.log(IsThisBlogSaved);
+    if (IsThisBlogSaved) {
+      res.status(400).json({message: "This Blog Already Saved"});
+      return;
+    }
+    console.log("Save The Blog");
+
     const savedBlog = await SavedModel.create({
       owner: isTokenValid.id,
       blog: blogId,
@@ -47,7 +56,6 @@ const saveBlog = async (req, res) => {
       { isSaved: true },
       { new: true }
     );
-    console.log(blogEdited);
 
     res.status(200).send(savedBlog);
   } catch (error) {
@@ -55,4 +63,21 @@ const saveBlog = async (req, res) => {
   }
 };
 
-export { getSavedBlog, saveBlog };
+
+// @desc Save Blog
+// @route Register POST /saved/getSavedBlog
+// @access Private
+const deleteSavedBlog = async (req, res) => {
+  const token = req.cookies.user_token;
+  const blogId = req.params.id;
+  try {
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
+    const DeletedBlog = await SavedModel.deleteOne({blog: blogId});
+    res.status(200).json({message: "Blog Deleted Succefully"});
+  } catch (error) {
+    res.status(400).send({ message: "Can not Saved This Blog" });
+  }
+};
+
+
+export { getSavedBlog, saveBlog, deleteSavedBlog };

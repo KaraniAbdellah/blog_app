@@ -38,7 +38,7 @@ const Blogs = () => {
     setIsLoading(true);
     try {
       await axios
-        .get("http://127.0.0.1:3000/save/getSavedBlog", {
+        .delete("http://127.0.0.1:3000/save/getSavedBlog", {
           withCredentials: true, // for send the set-cookie header
         })
         .then((res) => {
@@ -96,11 +96,11 @@ const Blogs = () => {
   return (
     <div className="blogs mt-5 w-full mr-4">
       {!userInfo.username && blogChoice !== "For You" ? (
-        <p class="text-center text-gray-500 text-xl mt-10">
+        <p className="text-center text-gray-500 text-xl mt-10">
           No blog posts available yet.
         </p>
       ) : IsLoading === false && blogs.length === 0 ? (
-        <p class="text-center text-gray-500 text-xl mt-10">
+        <p className="text-center text-gray-500 text-xl mt-10">
           No blog posts available yet.
         </p>
       ) : IsLoading ? (

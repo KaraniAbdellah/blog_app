@@ -9,7 +9,7 @@ const Aside = () => {
                 {
                     topics.map((topic, index) => {
                         return (
-                            <button key={index} className='p-3 bg-gray-200 m-1 text-zinc-900 rounded-full text-sm'>{topic}</button>
+                            <button key={index} className='p-3 bg-gray-100 m-1 text-zinc-900 rounded-full text-sm'>{topic}</button>
                         )
                     })
                 }

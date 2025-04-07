@@ -12,6 +12,7 @@ import { UserContext } from "../contexts/userContext";
 import { blogChoiceContext } from "../contexts/blogChoiceContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const Blog = () => {
   const blog = useContext(BlogContext);
@@ -19,7 +20,6 @@ const Blog = () => {
   const [blogChoice] = useContext(blogChoiceContext);
 
   const SaveBlog = async (blogId) => {
-    
     try {
       await axios
         .get(`http://127.0.0.1:3000/save/savedBlog/${blogId}`, {
@@ -32,12 +32,55 @@ const Blog = () => {
           });
         });
     } catch (error) {
+      toast.error("Can Not Save This Blog", {
+        duration: 2000,
+        style: { color: "rgb(239 68 68)", fontWeight: "bold" },
+      });
       console.log(error);
     }
   };
 
-  const DeleteSavedBlog = async (blogId) => {};
-  const DeleteUserBlog = async (blogId) => {};
+  const DeleteSavedBlog = async (blogId) => {
+    try {
+      await axios
+        .delete(`http://127.0.0.1:3000/save/deleteSavedBlog/${blogId}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          toast.success("Blog Deleted Succesfully", {
+            duration: 2000,
+            style: { color: "#4BB543", fontWeight: "bold" },
+          });
+        });
+    } catch (error) {
+      toast.error("Can Not Save This Blog", {
+        duration: 2000,
+        style: { color: "rgb(239 68 68)", fontWeight: "bold" },
+      });
+      console.log(error);
+    }
+  };
+
+  const DeleteUserBlog = async (blogId) => {
+    try {
+      await axios
+        .delete(`http://127.0.0.1:3000/blog/deleteBlog/${blogId}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          toast.success("Blog Deleted Succesfully", {
+            duration: 2000,
+            style: { color: "#4BB543", fontWeight: "bold" },
+          });
+        });
+    } catch (error) {
+      toast.error("Can Not Save This Blog", {
+        duration: 2000,
+        style: { color: "rgb(239 68 68)", fontWeight: "bold" },
+      });
+      console.log(error);
+    }
+  };
   
   return (
     <article
@@ -87,15 +130,7 @@ const Blog = () => {
             </div>
           </div>
 
-          {blog.isSaved === false? (
-            <button
-              className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
-              aria-label="Save this blog post"
-              onClick={() => SaveBlog(blog._id)}
-            >
-              <Bookmark size={18} />
-            </button>
-          ) : blogChoice === "Saved" ? (
+          {blogChoice === "Saved" ? (
             <button
               onClick={() => DeleteSavedBlog(blog._id)}
               className="save-button flex items-center text-zinc-600 hover:text-red-600 transition-colors"
@@ -112,7 +147,13 @@ const Blog = () => {
               <TrashIcon size={18} />
             </button>
           ) : (
-            ""
+            <button
+            className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
+            aria-label="Save this blog post"
+            onClick={() => SaveBlog(blog._id)}
+          >
+            <Bookmark size={18} />
+          </button>
           )}
         </div>
       </div>

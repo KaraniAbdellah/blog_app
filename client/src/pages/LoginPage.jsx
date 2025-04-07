@@ -114,7 +114,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-full min-h-screen">
+    <div className="flex justify-center items-center w-full min-h-screen p-10">
       <div className="bg-white lg:w-[40%] md:w-[60%] w-[90%] shadow-md rounded-md p-6">
         <h1 className="mb-10 text-center font-medium font-serif text-3xl">
           Join Crafting.
@@ -185,7 +185,7 @@ const LoginPage = () => {
           </form>
         ) : (
           <form onSubmit={(e) => handleSubmit(e)} className="text-center">
-            <div className="profile_image bg-gray-100 rounded-full w-[200px] h-[200px] flex justify-center items-center mx-auto my-5">
+            <div className="profile_image bg-gray-100 rounded-full w-[200px] h-[200px] flex justify-center items-center mx-auto">
               <input
                 type="file"
                 className="hidden"
@@ -202,6 +202,9 @@ const LoginPage = () => {
                 </span>
               </label>
             </div>
+            <p className="mb-5 text-zinc-700 font-medium mt-2">
+              Choice an image
+            </p>
 
             <div className="flex justify-start p-2 mb-4 items-center w-full email rounded-sm border-gray-300 border bg-gray-50">
               <User className="text-gray-300 font-medium mr-2" />

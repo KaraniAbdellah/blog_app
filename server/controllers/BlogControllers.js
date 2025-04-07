@@ -48,4 +48,22 @@ const getRandomBlogs = async (req, res) => {
   }
 };
 
-export { createBlog, getUserBlogs, getRandomBlogs };
+
+// @desc Get Random Blogs
+// @route Register GET /blog/getRandomBlogs
+// @access Private
+const deleteBlog = async (req, res) => {
+  const token = req.cookies.user_token;
+  const blogId = req.params.id;
+  console.log("We Must Delete The Blog");
+  try {
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
+
+    const DeletedBlog = await BlogModel.findByIdAndDelete(blogId);
+    res.status(200).json({message: "Blog Deleted Succefully"});
+  } catch (error) {
+    res.status(400).send({ message: "Can not Saved This Blog" });
+  }
+};
+
+export { createBlog, getUserBlogs, getRandomBlogs, deleteBlog };
