@@ -29,7 +29,7 @@ function Blog_Details() {
 
   const AddLikes = async () => {
     try {
-      await axios.post(`http://127.0.0.1:3000/blog/addLike/${params.id}`, {
+      await axios.get(`http://127.0.0.1:3000/blog/addLike/${params.id}`, {
         withCredentials: true,
       }).then((res) => {
         console.log(res.data);
@@ -41,7 +41,7 @@ function Blog_Details() {
 
   const AddComments = async () => {
     try {
-      await axios.post(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {
+      await axios.get(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {
         withCredentials: true,
       }).then((res) => {
         console.log(res.data);
@@ -90,7 +90,7 @@ function Blog_Details() {
                 <p>{blogDetails.commentsNumber}</p>
               </div>
               <button onClick={() => AddLikes()} className="cursor-pointer flex items-center gap-1">
-                <ThumbsUp className="w-5 h-5" />
+                <ThumbsUp style={{ fill: "currentColor", color:"#333333"}} className="w-5 h-5" />
                 <p>{blogDetails.likesNumber}</p>
               </button>
             </div>
@@ -118,7 +118,7 @@ function Blog_Details() {
                 type="text"
               ></textarea>
               <div className="btns text-end">
-                <button className="bg-gray-300 text-zinc-700 font-medium text-sm px-2 py-1 rounded-tl-sm rounded-bl-sm">
+                <button className="bg-gray-200 text-zinc-600 font-medium text-sm px-2 py-1 rounded-tl-sm rounded-bl-sm">
                   Cancel
                 </button>
                 <button className="bg-sky-500 text-zinc-700 font-medium text-sm px-2 py-1 rounded-tr-sm rounded-br-sm">

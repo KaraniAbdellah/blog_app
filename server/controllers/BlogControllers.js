@@ -106,7 +106,6 @@ const getBlogById = async (req, res) => {
 const addLike = async (req, res) => {
   const token = req.cookies.user_token;
   const id = req.params.id;
-  console.log("token is ", token);
 
   try {
     const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
@@ -116,7 +115,6 @@ const addLike = async (req, res) => {
       { likesNumber: oldBlog.likesNumber + 1 },
       { new: true }
     );
-    
     res.status(200).send({message: "Like Add Succefully"});
   } catch (error) {
     res.status(400).send({error: error});
@@ -124,13 +122,14 @@ const addLike = async (req, res) => {
   }
 };
 
+
+
 // @desc Get Random Blogs
 // @route Register POST /blog/addComment/:id
 // @access Private
 const addComment = async (req, res) => {
   const id = req.params.id;
   const token = req.cookies.user_token;
-  console.log("token is ", token);
 
   try {
     const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);

@@ -17,8 +17,8 @@ BlogRoute.get("/getUserBlogs/:id", getUserBlogs);
 BlogRoute.get("/getRandomBlogs", getRandomBlogs);
 BlogRoute.delete("/deleteBlog/:id", deleteBlog);
 BlogRoute.get("/getBlogById/:id", getBlogById);
-BlogRoute.post("/addLike/:id", addLike);
-BlogRoute.post("/addComment/:id", addComment);
+BlogRoute.get("/addLike/:id", addLike);
+BlogRoute.get("/addComment/:id", addComment);
 
 
 export default BlogRoute;
