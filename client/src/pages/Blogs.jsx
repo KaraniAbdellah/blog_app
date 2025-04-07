@@ -38,7 +38,7 @@ const Blogs = () => {
     setIsLoading(true);
     try {
       await axios
-        .delete("http://127.0.0.1:3000/save/getSavedBlog", {
+        .get("http://127.0.0.1:3000/save/getSavedBlog", {
           withCredentials: true, // for send the set-cookie header
         })
         .then((res) => {

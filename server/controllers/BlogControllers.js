@@ -1,5 +1,6 @@
 import BlogModel from "../models/Blog.js";
 import jwt from "jsonwebtoken";
+import SavedBlogModel from "../models/Saved.js";
 
 // @desc Create New Blog
 // @route Register POST /blog/createBlog
@@ -59,7 +60,11 @@ const deleteBlog = async (req, res) => {
   try {
     const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
 
+    // Delete Blog From Blog Model
     const DeletedBlog = await BlogModel.findByIdAndDelete(blogId);
+    // Delete Blog From Saved Item
+    const DeleteSavedBlog = await SavedBlogModel.deleteOne({blog: blogId});
+
     res.status(200).json({message: "Blog Deleted Succefully"});
   } catch (error) {
     res.status(400).send({ message: "Can not Saved This Blog" });

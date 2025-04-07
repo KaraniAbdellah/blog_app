@@ -16,10 +16,10 @@ const getSavedBlog = async (req, res) => {
       .populate("owner");
 
     const blogs = await Promise.all(
-      savedBlogs.map(async (sBlog) => {
-        const blogOwner = await UserModel.findById(sBlog.blog.owner);
-        sBlog.blog.owner = blogOwner;
-        return sBlog.blog;
+      savedBlogs.map(async (SBlog) => {
+        const blogOwner = await UserModel.findById(SBlog.blog.owner);
+        SBlog.blog.owner = blogOwner;
+        return SBlog.blog;
       })
     );
 

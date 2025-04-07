@@ -81,7 +81,7 @@ const Blog = () => {
       console.log(error);
     }
   };
-  
+
   return (
     <article
       id={blog._id}
