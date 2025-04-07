@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
 import { Link } from "react-router";
 
 
-const Blog = () => {
+const Blog = ({blogs, setBlogs}) => {
   const blog = useContext(BlogContext);
   const [userInfo] = useContext(UserContext);
   const [blogChoice] = useContext(blogChoiceContext);
@@ -43,6 +43,9 @@ const Blog = () => {
   };
 
   const DeleteSavedBlog = async (blogId) => {
+    // Remove Blog from UseState()
+    setBlogs(() => blogs.filter((blog) => blog._id != blogId));
+
     try {
       await axios
         .delete(`http://127.0.0.1:3000/save/deleteSavedBlog/${blogId}`, {
@@ -64,6 +67,7 @@ const Blog = () => {
   };
 
   const DeleteUserBlog = async (blogId) => {
+    setBlogs(() => blogs.filter((blog) => blog._id != blogId));
     try {
       await axios
         .delete(`http://127.0.0.1:3000/blog/deleteBlog/${blogId}`, {

@@ -98,7 +98,7 @@ const Header = () => {
             {userInfo.userImage ? (
               <button
                 onClick={() => setProfile(!Profile)}
-                className="w-[35px] h-[35px] flex hover:bg-sky-700 transition-all rounded-full ml-2"
+                className="w-[35px] h-[35px] flex hover:bg-white transition-all rounded-full ml-2"
               >
                 <img
                   src={userInfo.userImage}

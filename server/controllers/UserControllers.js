@@ -76,21 +76,23 @@ const login = async (req, res) => {
 // @access Private
 const profile = async (req, res) => {
   const token = req.cookies.user_token;
-  if (token) {
-    const {id, username, iat } = jwt.verify(token, process.env.SECRET_KEY);
-    const user = await UserModel.findById(id);    
-
-    if (id && username && iat && user) {
-      res.json({
-        id, username, iat, userImage: user.userImage,
-      });
-    } else {
-      res.status(400).send({ message: "Invalid Profile" });
-    }
-  }
   try {
+    if (token) {
+      const {id, username, iat } = jwt.verify(token, process.env.SECRET_KEY);
+      const user = await UserModel.findById(id);    
+  
+      if (id && username && iat && user) {
+        res.status(200).send({
+          id, username, iat, userImage: user.userImage,
+        });
+      } else {
+        res.status(404).send({ message: "Invalid Profile" });
+      }
+    } else {
+      res.status(404).send({ message: "Invalid Profile" });
+    }
   } catch (error) {
-    res.status(400).send({ message: error });
+    res.status(404).send({ message: error });
   }
 };
 

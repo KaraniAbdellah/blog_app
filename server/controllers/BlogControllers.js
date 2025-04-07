@@ -84,10 +84,8 @@ const deleteBlog = async (req, res) => {
 // @route Register GET /blog/getBlogById/:id
 // @access Private
 const getBlogById = async (req, res) => {
-  const token = req.cookies.user_token;
   const blogId = req.params.id;
   try {
-    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
     const blogDetails = await BlogModel.findById(blogId).populate("owner");
     if (blogDetails) {
       res.status(200).json(blogDetails);
@@ -115,7 +113,7 @@ const addLike = async (req, res) => {
       { likesNumber: oldBlog.likesNumber + 1 },
       { new: true }
     );
-    res.status(200).send({message: "Like Add Succefully"});
+    res.status(200).send(blog);
   } catch (error) {
     res.status(400).send({error: error});
     console.log(error);

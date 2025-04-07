@@ -109,7 +109,7 @@ const Blogs = () => {
         blogs.map((blog, index) => {
           return (
             <BlogContext.Provider key={index} value={blog}>
-              <Blog></Blog>
+              <Blog blogs={blogs} setBlogs={setBlogs}></Blog>
             </BlogContext.Provider>
           );
         })
