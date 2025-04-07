@@ -4,12 +4,12 @@ import axios from "axios";
 import Loading from "../components/Loading";
 import { MessageCircle, ThumbsUp } from "lucide-react";
 
-
 function Blog_Details() {
   const params = useParams();
   const [blogDetails, setBlogDetails] = useState();
   const [IsLoading, setIsLoading] = useState(true);
-  const [comments, setComments] = useState(["This is Comment"]);
+  const [comments, setComments] = useState();
+  const [like, setLike] = useState(true);
 
   const getBlogDetails = async () => {
     try {
@@ -28,28 +28,33 @@ function Blog_Details() {
   };
 
   const AddLikes = async () => {
+    setLike(false);
     try {
-      await axios.get(`http://127.0.0.1:3000/blog/addLike/${params.id}`, {
-        withCredentials: true,
-      }).then((res) => {
-        console.log(res.data);
-      })
+      await axios
+        .get(`http://127.0.0.1:3000/blog/addLike/${params.id}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const AddComments = async () => {
-    try {
-      await axios.get(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {
-        withCredentials: true,
-      }).then((res) => {
-        console.log(res.data);
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    console.log(comments);
+    // try {
+    //   await axios.get(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {
+    //     withCredentials: true,
+    //   }).then((res) => {
+    //     console.log(res.data);
+    //     console.log(comments);
+    //   })
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
 
   useEffect(() => {
     getBlogDetails();
@@ -89,8 +94,19 @@ function Blog_Details() {
                 <MessageCircle className="w-5 h-5" />
                 <p>{blogDetails.commentsNumber}</p>
               </div>
-              <button onClick={() => AddLikes()} className="cursor-pointer flex items-center gap-1">
-                <ThumbsUp style={{ fill: "currentColor", color:"#333333"}} className="w-5 h-5" />
+              <button
+                onClick={() => AddLikes()}
+                className="cursor-pointer flex items-center gap-1"
+              >
+                {like ? (
+                  <ThumbsUp className="w-5 h-5" />
+                ) : (
+                  <ThumbsUp
+                    style={{ fill: "currentColor", color: "#333333" }}
+                    className="w-5 h-5"
+                  />
+                )}
+
                 <p>{blogDetails.likesNumber}</p>
               </button>
             </div>
@@ -110,18 +126,21 @@ function Blog_Details() {
 
           <div className="commentes mt-6 w-full max-w-3xl bg-white shadow py-2 px-6 rounded-md space-y-6">
             <h1 className="font-medium text-lg">Comments: </h1>
-            <div style={{margin: 0}} className="bg-white p-2">
+            <div style={{ margin: 0 }} className="bg-white p-2">
               <textarea
+                onChange={(e) =>
+                  setComments(() => e.target.value)
+                }
                 rows={4}
                 className="border-none bg-gray-50 rounded-md p-2 w-full h-[80%] outline-none mt-0"
                 placeholder="what are you thoughts?"
                 type="text"
               ></textarea>
               <div className="btns text-end">
-                <button className="bg-gray-200 text-zinc-600 font-medium text-sm px-2 py-1 rounded-tl-sm rounded-bl-sm">
-                  Cancel
-                </button>
-                <button className="bg-sky-500 text-zinc-700 font-medium text-sm px-2 py-1 rounded-tr-sm rounded-br-sm">
+                <button
+                  onClick={() => AddComments()}
+                  className="bg-sky-500 text-zinc-700 font-medium text-sm px-2 py-1 rounded-tr-sm rounded-br-sm"
+                >
                   Share
                 </button>
               </div>
