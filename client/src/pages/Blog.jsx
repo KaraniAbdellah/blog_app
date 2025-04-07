@@ -13,6 +13,8 @@ import { blogChoiceContext } from "../contexts/blogChoiceContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import Cookies from "js-cookie";
+import { Link } from "react-router";
+
 
 const Blog = () => {
   const blog = useContext(BlogContext);
@@ -99,9 +101,11 @@ const Blog = () => {
           </h3>
         </header>
 
-        <h2 className="font-semibold md:text-2xl text-lg text-zinc-800 mb-1">
-          {blog.blogTitle || "Untitled Blog Post"}
-        </h2>
+        <Link to={`/blog/${blog._id}`}>
+          <h2 className="font-semibold md:text-2xl text-lg text-zinc-800 mb-1">
+            {blog.blogTitle || "Untitled Blog Post"}
+          </h2>
+        </Link>
 
         <p className="short_description mb-3 text-zinc-600">
           {blog.shortDescription}
@@ -148,12 +152,12 @@ const Blog = () => {
             </button>
           ) : (
             <button
-            className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
-            aria-label="Save this blog post"
-            onClick={() => SaveBlog(blog._id)}
-          >
-            <Bookmark size={18} />
-          </button>
+              className="save-button flex items-center text-zinc-600 hover:text-blue-600 transition-colors"
+              aria-label="Save this blog post"
+              onClick={() => SaveBlog(blog._id)}
+            >
+              <Bookmark size={18} />
+            </button>
           )}
         </div>
       </div>

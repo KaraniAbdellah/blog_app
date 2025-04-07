@@ -4,11 +4,11 @@ import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
 import Loading from "./components/Loading";
 import CreateBlog from "./pages/createBlog";
+import Blog_Details from "./pages/Blog_Details";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { UserContext } from "./contexts/userContext";
 import { blogChoiceContext } from "./contexts/blogChoiceContext";
-
 
 
 function App() {
@@ -29,6 +29,7 @@ function App() {
             <Route path="/loading" element={<Loading />}></Route>
             <Route path="/write" element={<CreateBlog />}></Route>
           </Route>
+          <Route path="/blog/:id" element={<Blog_Details></Blog_Details>}></Route>
         </Routes>
         <Toaster />
       </UserContext.Provider>
