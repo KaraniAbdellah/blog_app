@@ -43,14 +43,17 @@ function Blog_Details() {
   };
 
   const AddComments = async () => {
-    console.log(comments);
     try {
-      await axios.post(`http:/127.0.0.1/3000/blog/addComment/${params.id}`, {comments: comments},{
-        withCredentials: true,
-      }).then((res) => {
-        console.log(res.data);
-        console.log(comments);
-      })
+      await axios
+        .post(
+          `http://127.0.0.1:3000/blog/addComment/${params.id}`,
+          { comment: comments },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          console.log(res.data);
+          console.log(comments);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -128,9 +131,7 @@ function Blog_Details() {
             <h1 className="font-medium text-lg">Comments: </h1>
             <div style={{ margin: 0 }} className="bg-white p-2">
               <textarea
-                onChange={(e) =>
-                  setComments(() => e.target.value)
-                }
+                onChange={(e) => setComments(() => e.target.value)}
                 rows={4}
                 className="border-none bg-gray-50 rounded-md p-2 w-full h-[80%] outline-none mt-0"
                 placeholder="what are you thoughts?"
@@ -141,7 +142,7 @@ function Blog_Details() {
                   onClick={() => AddComments()}
                   className="bg-sky-500 text-zinc-700 font-medium text-sm px-2 py-1 rounded-tr-sm rounded-br-sm"
                 >
-                  Share
+                  Comment
                 </button>
               </div>
             </div>

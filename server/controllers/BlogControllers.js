@@ -130,21 +130,18 @@ const addLike = async (req, res) => {
 const addComment = async (req, res) => {
   console.log("Hello World");
   const id = req.params.id;
-  // const token = req.cookies.user_token;
-  console.log(req.body);
-
+  const token = req.cookies.user_token;
   try {
-    // const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
-    // const oldBlog = await BlogModel.findById(id);
-    // const blog = await BlogModel.findByIdAndUpdate(
-    //   id,
-    //   { commentsNumber: oldBlog.commentsNumber + 1 },
-    //   { new: true }
-    // );
-    // res.status(200).send({message: "Comment Add Succefully"});
+    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
+    const OldBlog = await BlogModel.findById(id);
+    const blog = await BlogModel.findByIdAndUpdate(id, {
+      Commentes: [...OldBlog.Commentes, req.body.comment],
+      commentsNumber: OldBlog.commentsNumber + 1
+    });
+    res.status(200).send(blog);
   } catch (error) {
-    // res.status(400).send({error: error});
-    // console.log(error);
+    res.status(400).send({error: error});
+    console.log(error);
   }
 };
 
