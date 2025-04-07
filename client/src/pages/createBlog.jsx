@@ -62,6 +62,7 @@ const CreateBlog = () => {
       commentsNumber: 0,
       isSaved: false,
     };
+    console.log(BlogData);
     CreateBlog(BlogData);
     toast.success("Success Creating Blog", {
       duration: 2000,

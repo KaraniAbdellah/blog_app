@@ -77,13 +77,9 @@ const deleteBlog = async (req, res) => {
 const getBlogById = async (req, res) => {
   const token = req.cookies.user_token;
   const blogId = req.params.id;
-  console.log("We Must Delete The Blog");
-  console.log(blogId);
-  console.log(token);
   try {
     const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
-    console.log(isTokenValid);
-    const blogDetails = await BlogModel.findById(blogId);
+    const blogDetails = await BlogModel.findById(blogId).populate("owner");
     if (blogDetails) {
       res.status(200).json(blogDetails);
       return;

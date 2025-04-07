@@ -28,8 +28,8 @@ function App() {
             <Route path="/login" element={userInfo.username ? <Navigate to={"/"}></Navigate> : <LoginPage/>}></Route>
             <Route path="/loading" element={<Loading />}></Route>
             <Route path="/write" element={<CreateBlog />}></Route>
+            <Route path="/blog/:id" element={<Blog_Details></Blog_Details>}></Route>
           </Route>
-          <Route path="/blog/:id" element={<Blog_Details></Blog_Details>}></Route>
         </Routes>
         <Toaster />
       </UserContext.Provider>
