@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const Aside = () => {
     const topics = ["Programming", "Music", "Technology", "Self Development", "Machine Learning"];
@@ -15,7 +16,9 @@ const Aside = () => {
                 }
             </nav>
             {/* Go to explore-topics */}
-            <button className='text-gray-400 m-1 text-sm font-medium'>See more topics</button> 
+            <Link to="/explore-topics">
+                <button className='text-gray-400 m-1 text-sm font-medium'>See more topics</button> 
+            </Link>
         </div>
     );
 }

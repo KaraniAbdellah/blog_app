@@ -12,7 +12,6 @@ import axios from "axios";
 import { UserContext } from "../contexts/userContext";
 import Loading from "./Loading";
 
-
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
   const [Profile, setProfile] = useState(false);
@@ -58,7 +57,7 @@ const Header = () => {
   }, []);
   const sayHello = () => {
     alert("Hello");
-  }
+  };
   return (
     <header className="h-[70px] border px-8 bg-gray-50 w-full flex justify-between items-center">
       <div className="logo flex justify-between items-center">
@@ -71,30 +70,32 @@ const Header = () => {
         <div className="search rounded-full relative bg-gray-100 p-2 flex justify-start items-center">
           <Search className="text-gray-300 mr-2" />
           <input
-            onFocus={() => setShowExploreTopics(!showExploreTopics)}
+            onFocus={() => setShowExploreTopics(true)}
+            onBlur={() => setTimeout(() => setShowExploreTopics(false), 150)} // delay to allow click
             className="bg-gray-100 group outline-none text-black w-full"
             type="text"
             placeholder="Search"
           />
-          <Link to="/explore-topics">
+          {showExploreTopics && (
             <div
-            onClick={() => setShowExploreTopics(false)}
-              className={` ${showExploreTopics ? "flex" : "hidden"}
-              explore_topics justify-between top-11 items-center cursor-pointer text-zinc-600
-           hover:text-zinc-900 absolute bg-white w-full px-4 py-4 z-[100] shadow-lg
-           before:absolute before:border-b-8 before:border-b-white
-            before:border-t-8 before:border-t-transparent 
-            before:border-r-8 before:border-r-transparent 
-            before:border-l-8 before:border-l-transparent 
-            p-10 left-5 before:top-[-14px]`}
+              onMouseDown={() => {
+                setShowExploreTopics(false);
+                navigate("/explore-topics");
+              }}
+              className="explore_topics flex justify-between top-11 items-center cursor-pointer text-zinc-600
+      hover:text-zinc-900 absolute bg-white w-full px-4 py-4 z-[100] shadow-lg
+      before:absolute before:border-b-8 before:border-b-white
+      before:border-t-8 before:border-t-transparent 
+      before:border-r-8 before:border-r-transparent 
+      before:border-l-8 before:border-l-transparent 
+      p-10 left-5 before:top-[-14px]"
             >
               <p>Explore Topics</p>
               <p>
-                {" "}
                 <ArrowUpRight />
               </p>
             </div>
-          </Link>
+          )}
         </div>
       </div>
       <nav className="flex relative">

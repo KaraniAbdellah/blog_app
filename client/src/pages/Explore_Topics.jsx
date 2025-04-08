@@ -3,6 +3,7 @@ import { Search, ThumbsUp, MessageCircle, Calendar } from "lucide-react";
 import { ReactTyped } from "react-typed";
 import axios from "axios";
 import { Link } from "react-router";
+import toast from "react-hot-toast";
 
 const ExploreTopics = () => {
   const [searched, setSearched] = useState("");
@@ -24,6 +25,9 @@ const ExploreTopics = () => {
         })
         .then((res) => {
           console.log(res.data);
+          if (res.data.length === 0) {
+            toast("No blog found");
+          }
           setFiltredBlogs(res.data);
         });
     } catch (error) {
@@ -39,7 +43,9 @@ const ExploreTopics = () => {
           withCredentials: true,
         })
         .then((res) => {
-          console.log(res.data);
+          if (res.data.length === 0) {
+            toast("No blog available");
+          }
           setFiltredBlogs(res.data);
         });
     } catch (error) {

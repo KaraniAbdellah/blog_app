@@ -115,10 +115,14 @@ const LoginPage = () => {
 
   return (
     <div className="flex justify-center items-center w-full min-h-screen p-10">
-      <div className="bg-white lg:w-[40%] md:w-[60%] w-[90%] shadow-md rounded-md p-6">
-        <h1 className="mb-10 text-center font-medium font-serif text-3xl">
+      <div className="bg-white lg:w-[40%] md:w-[60%] w-[90%] border rounded-md p-6">
+        <h1
+          className="mb-10 text-center font-medium font-serif text-3xl mr-3 
+        bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 text-transparent bg-clip-text"
+        >
           Join Crafting.
         </h1>
+
         <nav className="mb-5 flex justify-center items-center">
           <button
             onClick={() => handleChange()}
@@ -149,7 +153,7 @@ const LoginPage = () => {
                 }
                 className="w-full email rounded-sm bg-gray-50 outline-none border-non"
                 type="email"
-                placeholder="Phone number, username, or email"
+                placeholder="Your email..."
               />
             </div>
             <div className="flex justify-start p-2 mb-2 items-center w-full password rounded-sm border-gray-300 border bg-gray-50">
@@ -229,7 +233,7 @@ const LoginPage = () => {
                 }
                 className="w-full email rounded-sm bg-gray-50 outline-none border-non"
                 type="email"
-                placeholder="Phone number, username, or email"
+                placeholder="Your email..."
               />
             </div>
             <div className="flex justify-start p-2 mb-2 items-center w-full password rounded-sm border-gray-300 border bg-gray-50">
