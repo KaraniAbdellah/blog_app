@@ -64,7 +64,7 @@ const Header = () => {
       <div className="logo flex justify-between items-center">
         <a
           href="/"
-          className="font-semibold md:block hidden font-serif text-3xl mr-3 text-zinc-800"
+          className="font-semibold md:block hidden font-serif text-3xl mr-3 bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 text-transparent bg-clip-text"
         >
           Crafting
         </a>
