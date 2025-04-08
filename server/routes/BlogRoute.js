@@ -8,7 +8,8 @@ import {
   getBlogById,
   addLike,
   addComment,
-  getBlogByCategory
+  getBlogByCategory,
+  getBlogsBySearch
 } from "../controllers/BlogControllers.js";
 
 const BlogRoute = express.Router();
@@ -20,7 +21,8 @@ BlogRoute.delete("/deleteBlog/:id", deleteBlog);
 BlogRoute.get("/getBlogById/:id", getBlogById);
 BlogRoute.get("/addLike/:id", addLike);
 BlogRoute.post("/addComment/:id", addComment);
-BlogRoute.post("/getBlogByCategory/:category", getBlogByCategory);
+BlogRoute.get("/getBlogByCategory/:category", getBlogByCategory);
+BlogRoute.get("/getBlogsBySearch/:searched", getBlogsBySearch);
 
 
 export default BlogRoute;

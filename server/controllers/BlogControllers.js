@@ -146,14 +146,28 @@ const addComment = async (req, res) => {
 
 const getBlogByCategory = async (req, res) => {
   const category = req.params.category;
+  console.log("Hello World");
   try {
     console.log(category);
-    const FiltredBlogs = await BlogModel.find({Category: category});
+    const FiltredBlogs = await BlogModel.find({Category: category}).populate("owner");
+    console.log(FiltredBlogs);
     res.status(200).send(FiltredBlogs);
   } catch (error) {
-    res.status(400).send({message: "Can Not Find The Blogs"});
+    res.status(400).send({message: "An Error in Finding Blogs"});
   }
 }
+
+const getBlogsBySearch = async (req, res) => {
+  const seacrhed = req.params.searched;
+  try {
+    console.log(seacrhed);
+    const FiltredBlogs = await BlogModel.find({blogTitle: {$regex: seacrhed, $options: "i"}}).populate("owner");
+    res.status(200).send(FiltredBlogs);
+  } catch (error) {
+    res.status(400).send({message: "An Error in Finding Blogs"});
+  }
+}
+
 
 export {
   createBlog,
@@ -163,5 +177,6 @@ export {
   getBlogById,
   addLike,
   addComment,
-  getBlogByCategory
+  getBlogByCategory,
+  getBlogsBySearch
 };
