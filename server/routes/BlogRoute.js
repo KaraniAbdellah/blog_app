@@ -7,7 +7,8 @@ import {
   deleteBlog, 
   getBlogById,
   addLike,
-  addComment
+  addComment,
+  getBlogByCategory
 } from "../controllers/BlogControllers.js";
 
 const BlogRoute = express.Router();
@@ -19,6 +20,7 @@ BlogRoute.delete("/deleteBlog/:id", deleteBlog);
 BlogRoute.get("/getBlogById/:id", getBlogById);
 BlogRoute.get("/addLike/:id", addLike);
 BlogRoute.post("/addComment/:id", addComment);
+BlogRoute.post("/getBlogByCategory/:category", getBlogByCategory);
 
 
 export default BlogRoute;

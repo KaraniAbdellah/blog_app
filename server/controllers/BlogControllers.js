@@ -143,6 +143,16 @@ const addComment = async (req, res) => {
   }
 };
 
+
+const getBlogByCategory = () => {
+  const category = req.params.category;
+  try {
+    console.log(category);
+  } catch (error) {
+    
+  }
+}
+
 export {
   createBlog,
   getUserBlogs,
