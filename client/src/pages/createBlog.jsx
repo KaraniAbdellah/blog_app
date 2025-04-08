@@ -84,7 +84,7 @@ const CreateBlog = () => {
   return (
     <div className="container_bg relative z-[100]">
       <div className="min-h-screen bg-gradient-to-b flex justify-center items-start py-10 px-4">
-        <div className="max-w-4xl w-full bg-white opacity-95 rounded-lg shadow-sm p-6 md:p-8">
+        <div className="max-w-4xl w-full bg-white opacity-95 rounded-lg shadow-sm p-6 md:p-8 border">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
             Create New Blog
           </h1>

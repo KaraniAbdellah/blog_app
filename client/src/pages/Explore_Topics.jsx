@@ -26,7 +26,7 @@ const ExploreTopics = () => {
         .then((res) => {
           console.log(res.data);
           if (res.data.length === 0) {
-            toast("No blog found");
+            toast("No blog available");
           }
           setFiltredBlogs(res.data);
         });

@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { UserContext } from "../contexts/userContext";
 import profile from "../assests/profile.png";
 import { UseConvertTo64 } from "../hooks/useConverter";
+import { ReactTyped } from "react-typed";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -120,7 +121,12 @@ const LoginPage = () => {
           className="mb-10 text-center font-medium font-serif text-3xl mr-3 
         bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 text-transparent bg-clip-text"
         >
-          Join Crafting.
+          <ReactTyped
+            strings={["Join Crafting."]}
+            typeSpeed={150}
+            backSpeed={100}
+            loop
+          />
         </h1>
 
         <nav className="mb-5 flex justify-center items-center">

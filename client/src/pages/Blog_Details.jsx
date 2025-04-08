@@ -108,7 +108,7 @@ function Blog_Details() {
           <Loading />
         ) : (
           <div className="w-full max-w-3xl px-4">
-            <div className="bg-white opacity-95 shadow-dm rounded-lg overflow-hidden mb-6">
+            <div className="bg-white opacity-95 shadow-dm overflow-hidden mb-6  border rounded-lg">
               {/* Blog Header */}
               <div className="p-6 border-b border-gray-100 flex flex-col justify-center items-center">
                 <h1 className="text-3xl text-center font-bold text-gray-800 mb-2">
@@ -191,7 +191,7 @@ function Blog_Details() {
             </div>
 
             {/* Comments Section */}
-            <div className="bg-white shadow-md rounded-lg overflow-hidden">
+            <div className="bg-white overflow-hidden border rounded-lg">
               <div className="p-6 border-b border-gray-100">
                 <h2 className="text-xl font-semibold text-gray-800">
                   Comments ({blogDetails.commentsNumber})
