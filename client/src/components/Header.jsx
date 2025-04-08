@@ -78,6 +78,7 @@ const Header = () => {
           />
           <Link to="/explore-topics">
             <div
+            onClick={() => setShowExploreTopics(false)}
               className={` ${showExploreTopics ? "flex" : "hidden"}
               explore_topics justify-between top-11 items-center cursor-pointer text-zinc-600
            hover:text-zinc-900 absolute bg-white w-full px-4 py-4 z-[100] shadow-lg
