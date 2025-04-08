@@ -12,6 +12,7 @@ import axios from "axios";
 import { UserContext } from "../contexts/userContext";
 import Loading from "./Loading";
 
+
 const Header = () => {
   const [showExploreTopics, setShowExploreTopics] = useState(false);
   const [Profile, setProfile] = useState(false);
@@ -19,13 +20,18 @@ const Header = () => {
   const navigate = useNavigate();
 
   const getUserProfile = async () => {
-    await axios
-      .get("http://127.0.0.1:3000/user/profile", {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUserInfo(res.data);
-      });
+    try {
+      await axios
+        .get("http://127.0.0.1:3000/user/profile", {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setUserInfo(res.data);
+          console.log(res.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   async function Logout() {

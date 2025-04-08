@@ -18,6 +18,7 @@ function Blog_Details() {
   const [comment, setComment] = useState("");
   const [like, setLike] = useState(true);
   const [visibleComments, setVisibleComments] = useState(5);
+  const [userStatus, setUserStatus] = useState(undefined);
 
   const getBlogDetails = async () => {
     try {
@@ -49,26 +50,22 @@ function Blog_Details() {
 
   const IsThisUserLogin = async () => {
     try {
-      await axios
-        .get("http://127.0.0.1:3000/user/profile", {
-          withCredentials: true,
-        })
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((error) => {
-          return false;
-        });
+      const res = await axios.get("http://127.0.0.1:3000/user/profile", {
+        withCredentials: true,
+      });
+      console.log(res.data);
+      return true;
     } catch (error) {
+      console.log("This An Error = ", error);
       return false;
     }
   };
 
   const AddComments = async () => {
-    // Verfiy If This User Login
-    const UserStatus = await IsThisUserLogin();
-    console.log("UserStatus = ", UserStatus);
-    if (!UserStatus) {
+    const isLoggedIn = await IsThisUserLogin();
+
+    console.log("UserStatus = ", isLoggedIn);
+    if (!isLoggedIn) {
       toast("Please Login First");
       return;
     }
@@ -76,17 +73,17 @@ function Blog_Details() {
     if (!comment || comment.trim().length === 0) {
       return;
     }
+
     blogDetails.commentsNumber += 1;
     blogDetails.Commentes.push(comment);
     setComment("");
+
     try {
-      await axios
-        .post(
-          `http://127.0.0.1:3000/blog/addComment/${params.id}`,
-          { comment: comment },
-          { withCredentials: true }
-        )
-        .then((res) => {});
+      await axios.post(
+        `http://127.0.0.1:3000/blog/addComment/${params.id}`,
+        { comment },
+        { withCredentials: true }
+      );
     } catch (error) {
       console.log(error);
     }
