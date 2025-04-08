@@ -144,12 +144,14 @@ const addComment = async (req, res) => {
 };
 
 
-const getBlogByCategory = () => {
+const getBlogByCategory = async (req, res) => {
   const category = req.params.category;
   try {
     console.log(category);
+    const FiltredBlogs = await BlogModel.find({Category: category});
+    res.status(200).send(FiltredBlogs);
   } catch (error) {
-    
+    res.status(400).send({message: "Can Not Find The Blogs"});
   }
 }
 
@@ -161,4 +163,5 @@ export {
   getBlogById,
   addLike,
   addComment,
+  getBlogByCategory
 };

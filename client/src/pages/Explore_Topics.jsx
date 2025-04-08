@@ -5,6 +5,7 @@ import axios from "axios";
 
 const ExploreTopics = () => {
   const [searched, setSearched] = useState("");
+  const [FiltredBlogs, setFiltredBlogs] = useState([]);
   const topics = [
     "Programming",
     "Music",
@@ -18,13 +19,14 @@ const ExploreTopics = () => {
         withCredentials: true
       }).then((res) => {
         console.log(res.data);
+        setFiltredBlogs(FiltredBlogs);
       })
     } catch (error) {
       console.log(error);
     }
   }
   const handleChoiceCategory = (e) => {
-    console.log(e.target.textContent);
+    GetBlogsByCategory(e.target.textContent);
 
   };
   return (
