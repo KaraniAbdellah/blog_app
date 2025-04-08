@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import Loading from "./components/Loading";
 import CreateBlog from "./pages/createBlog";
 import Blog_Details from "./pages/Blog_Details";
-import Explore_Topics from "./pages/Explore_Topics"
+import Explore_Topics from "./pages/Explore_Topics";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { UserContext } from "./contexts/userContext";

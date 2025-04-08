@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Loading from "../components/Loading";
+import { Link } from "react-router";
 import {
   MessageCircle,
   ThumbsUp,
@@ -11,7 +12,6 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import "../css_filies/create_blog_bg.css";
-
 
 function Blog_Details() {
   const params = useParams();
@@ -110,8 +110,8 @@ function Blog_Details() {
           <div className="w-full max-w-3xl px-4">
             <div className="bg-white opacity-95 shadow-dm rounded-lg overflow-hidden mb-6">
               {/* Blog Header */}
-              <div className="p-6 border-b border-gray-100">
-                <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              <div className="p-6 border-b border-gray-100 flex flex-col justify-center items-center">
+                <h1 className="text-3xl text-center font-bold text-gray-800 mb-2">
                   {blogDetails.blogTitle}
                 </h1>
                 <p className="text-gray-600 text-lg">
@@ -140,6 +140,11 @@ function Blog_Details() {
                     </div>
                   </div>
                 </div>
+                <Link to="/write">
+                  <button className="px-8 mt-5 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm">
+                    Edit Blog
+                  </button>
+                </Link>
               </div>
 
               {/* Blog Stats */}
@@ -159,7 +164,7 @@ function Blog_Details() {
                     className={`w-5 h-5 mr-1 ${
                       !like ? "text-sky-600" : "text-gray-500"
                     }`}
-                    style={!like ? { fill: "#2563eb" } : {}}
+                    style={!like ? { fill: "rgb(2 132 199)" } : {}}
                   />
                   <span className="text-sm font-medium">
                     {blogDetails.likesNumber} Likes
