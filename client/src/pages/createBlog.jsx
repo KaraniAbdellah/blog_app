@@ -105,7 +105,7 @@ const CreateBlog = ({ EditedBlog }) => {
     <div className="container_bg relative z-[100]">
       <div className="min-h-screen bg-gradient-to-b flex justify-center items-start py-10 px-4">
         <div className="max-w-4xl w-full bg-white opacity-95 rounded-lg shadow-sm p-6 md:p-8 border">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 text-transparent bg-clip-text">
+          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 text-transparent bg-clip-text">
             <ReactTyped
               strings={[EditedBlog.owner ? "Update Your Blog" : "Create Your Blog"]}
               typeSpeed={150}
@@ -259,14 +259,14 @@ const CreateBlog = ({ EditedBlog }) => {
               {EditedBlog.owner ? (
                 <button
                   onClick={() => handlePublish()}
-                  className="px-8 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm"
+                  className="px-8 py-2 bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 text-white font-medium rounded-md hover:from-sky-500 hover:to-sky-600 transition duration-200 shadow-sm"
                 >
                   Update
                 </button>
               ) : (
                 <button
                   onClick={() => handlePublish()}
-                  className="px-8 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm"
+                  className="px-8 py-2 bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 text-white font-medium rounded-md hover:from-sky-500 hover:to-sky-600 transition duration-200 shadow-sm"
                 >
                   Publish
                 </button>

@@ -63,7 +63,7 @@ const Header = () => {
       <div className="logo flex justify-between items-center">
         <a
           href="/"
-          className="font-semibold md:block hidden font-serif text-3xl mr-3 bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 text-transparent bg-clip-text"
+          className="font-semibold md:block hidden font-serif text-3xl mr-3 bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 text-transparent bg-clip-text"
         >
           Crafting
         </a>
@@ -102,9 +102,9 @@ const Header = () => {
         {username ? (
           <div className="flex justify-between items-center">
             <Link to="/write">
-              <button className="flex hover:bg-gray-100 hover:rounded-md hover:transition-all px-3 py-2">
-                <FilePenLine className="text-zinc-500 mr-2 font-mono" />
-                <p className="text-zinc-500">Write</p>
+              <button className="flex hover:bg-sky-100 rounded-md border hover:transition-all px-3 py-2">
+                <FilePenLine className="text-sky-400 mr-2 font-normal" />
+                <p className="text-sky-400">Write</p>
               </button>
             </Link>
             {userInfo.userImage ? (

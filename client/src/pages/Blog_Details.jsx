@@ -150,7 +150,7 @@ function Blog_Details() {
                 {
                   userInfo.id === blogDetails.owner._id ? (
                     <Link to={`/edit/${blogDetails._id}`}>
-                      <button className="px-8 mt-5 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm">
+                      <button className="px-8 mt-5 py-2 bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 text-white font-medium rounded-md hover:from-sky-500 hover:to-sky-600 transition duration-200 shadow-sm">
                         Edit Blog
                       </button>
                     </Link>
