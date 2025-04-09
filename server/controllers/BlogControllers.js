@@ -199,5 +199,6 @@ export {
   addLike,
   addComment,
   getBlogByCategory,
-  getBlogsBySearch
+  getBlogsBySearch,
+  editBlog
 };
