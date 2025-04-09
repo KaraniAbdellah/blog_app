@@ -4,7 +4,8 @@ import {
   createBlog,
   getUserBlogs,
   getRandomBlogs,
-  deleteBlog, 
+  deleteBlog,
+  editBlog,
   getBlogById,
   addLike,
   addComment,
@@ -18,6 +19,7 @@ BlogRoute.post("/createBlog", createBlog);
 BlogRoute.get("/getUserBlogs/:id", getUserBlogs);
 BlogRoute.get("/getRandomBlogs", getRandomBlogs);
 BlogRoute.delete("/deleteBlog/:id", deleteBlog);
+BlogRoute.put("/editBlog/:id", editBlog);
 BlogRoute.get("/getBlogById/:id", getBlogById);
 BlogRoute.get("/addLike/:id", addLike);
 BlogRoute.post("/addComment/:id", addComment);

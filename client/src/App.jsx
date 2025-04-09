@@ -6,16 +6,19 @@ import Loading from "./components/Loading";
 import CreateBlog from "./pages/createBlog";
 import Blog_Details from "./pages/Blog_Details";
 import Explore_Topics from "./pages/Explore_Topics";
+import EditBlog from "./pages/EditBlog";
 import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { UserContext } from "./contexts/userContext";
 import { blogChoiceContext } from "./contexts/blogChoiceContext";
 
 
+
 function App() {
   const [userInfo, setUserInfo] = useState({});
   const [blogChoice, setBlogChoice] = useState("Your Blogs");
-  
+  const EditedBlog = {};
+
   return (
     <div className="w-full min-h-screen">
       <UserContext.Provider value={[userInfo, setUserInfo]}>
@@ -28,9 +31,10 @@ function App() {
               }></Route>
             <Route path="/login" element={userInfo.username ? <Navigate to={"/"}></Navigate> : <LoginPage/>}></Route>
             <Route path="/loading" element={<Loading />}></Route>
-            <Route path="/write" element={<CreateBlog />}></Route>
+            <Route path="/write" element={<CreateBlog EditedBlog={EditedBlog}/>}></Route>
             <Route path="/blog/:id" element={<Blog_Details></Blog_Details>}></Route>
             <Route path="/explore-topics" element={<Explore_Topics></Explore_Topics>}></Route>
+            <Route path="/edit/:id" element={<EditBlog></EditBlog>}></Route>
           </Route>
         </Routes>
         <Toaster />

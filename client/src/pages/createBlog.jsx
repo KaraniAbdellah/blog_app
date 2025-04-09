@@ -10,15 +10,17 @@ import toast from "react-hot-toast";
 import { UseConvertTo64 } from "../hooks/useConverter";
 import "../css_filies/create_blog_bg.css";
 
-const CreateBlog = () => {
+const CreateBlog = ({ EditedBlog }) => {
   const editor = useRef(null);
-  const [content, setContent] = useState("content");
-  const [title, setTitle] = useState("title");
-  const [category, setCategory] = useState("Programming");
-  const [image, setImage] = useState("");
-  const [short_description, setShort_description] =
-    useState("short description");
+  const [content, setContent] = useState(EditedBlog.contentBlog || "content");
+  const [title, setTitle] = useState(EditedBlog.blogTitle || "title");
+  const [category, setCategory] = useState(EditedBlog.Category || "Programming");
+  const [image, setImage] = useState(EditedBlog.blogImage || "");
+  const [short_description, setShort_description] = useState(EditedBlog.shortDescription || "short description");
   const [userInfo, setUserInfo] = useContext(UserContext);
+
+  console.log("Edited Blog From Create Blog Is", EditedBlog);
+
   const topics = [
     "Programming",
     "Music",
@@ -79,6 +81,10 @@ const CreateBlog = () => {
       duration: 2000,
       style: { color: "#4BB543", fontWeight: "bold" },
     });
+  };
+
+  const handleUpdate = async () => {
+    console.log("You Mist Edit This Blog");
   };
 
   return (
@@ -232,18 +238,21 @@ const CreateBlog = () => {
             </div>
 
             <div className="flex justify-end mt-6">
-              <button
-                type="button"
-                className="mr-4 px-6 py-2 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50 transition duration-200"
-              >
-                Save Draft
-              </button>
-              <button
-                onClick={() => handlePublish()}
-                className="px-8 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm"
-              >
-                Publish
-              </button>
+              {EditedBlog ? (
+                <button
+                  onClick={() => handleUpdate()}
+                  className="px-8 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm"
+                >
+                  Update
+                </button>
+              ) : (
+                <button
+                  onClick={() => handlePublish()}
+                  className="px-8 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm"
+                >
+                  Publish
+                </button>
+              )}
             </div>
           </div>
         </div>

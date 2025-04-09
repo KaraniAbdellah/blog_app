@@ -79,9 +79,30 @@ const deleteBlog = async (req, res) => {
 };
 
 
+// @desc Get Random Blogs
+// @route PUT /blog/editBlog
+// @access Private
+const editBlog = async (req, res) => {
+  const token = req.cookies.user_token;
+  const blogId = req.params.id;
+  try {
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
+
+    // Edited Blog From Blog Model
+    const EditedBlog = await BlogModel.findByIdAndUpdate(blogId, req.body);
+    // Edited Blog From Saved Item
+    // const EditedSavedBlog = await SavedBlogModel.deleteOne({ blog: blogId });
+
+    res.status(200).json({ message: "Blog Deleted Succefully" });
+  } catch (error) {
+    res.status(400).send({ message: "Can not Saved This Blog" });
+  }
+};
+
+
 
 // @desc Get Random Blogs
-// @route Register GET /blog/getBlogById/:id
+// @route GET /blog/getBlogById/:id
 // @access Private
 const getBlogById = async (req, res) => {
   const blogId = req.params.id;

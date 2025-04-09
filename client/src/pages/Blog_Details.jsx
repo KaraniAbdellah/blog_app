@@ -12,6 +12,9 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import "../css_filies/create_blog_bg.css";
+import { useContext } from "react";
+import { UserContext } from "../contexts/userContext";
+
 
 function Blog_Details() {
   const params = useParams();
@@ -21,6 +24,8 @@ function Blog_Details() {
   const [like, setLike] = useState(true);
   const [visibleComments, setVisibleComments] = useState(5);
   const [userStatus, setUserStatus] = useState(undefined);
+  const [userInfo] = useContext(UserContext);
+
 
   const getBlogDetails = async () => {
     try {
@@ -140,11 +145,15 @@ function Blog_Details() {
                     </div>
                   </div>
                 </div>
-                <Link to="/write">
-                  <button className="px-8 mt-5 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm">
-                    Edit Blog
-                  </button>
-                </Link>
+                {
+                  userInfo.id === blogDetails.owner._id ? (
+                    <Link to={`/edit/${blogDetails._id}`}>
+                      <button className="px-8 mt-5 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm">
+                        Edit Blog
+                      </button>
+                    </Link>
+                  ) : ""
+                }
               </div>
 
               {/* Blog Stats */}
