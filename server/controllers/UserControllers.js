@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 // @desc Register new user
-// @route Register POST /user/Register
+// @route POST /user/register
 // @access Public
 const register = async (req, res) => {
   const { username, email, password, userImage } = req.body;
@@ -22,7 +22,6 @@ const register = async (req, res) => {
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
       userImage: userImage,
     });
-    console.log(user);
     if (user) {
       return res.status(200).json(user);
     }
@@ -32,9 +31,7 @@ const register = async (req, res) => {
   }
 };
 
-// @desc Register new user
-// @route Register POST /user/Register
-// @access Public
+
 const cookieOptions = {
   secure: true,
   // we are in dev mode --> we do not have https in localhost
@@ -71,8 +68,8 @@ const login = async (req, res) => {
   }
 };
 
-// @desc Register new user
-// @route Register POST /user/Register
+// @desc Profile Send User Profile
+// @route  GEt /user/profile
 // @access Private
 const profile = async (req, res) => {
   const token = req.cookies.user_token;
@@ -97,7 +94,6 @@ const profile = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  console.log(req.cookies);
   res.cookie("user_token", "", cookieOptions);
   res.json({ message: "ok" });
 };

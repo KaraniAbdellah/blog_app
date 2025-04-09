@@ -11,7 +11,9 @@ export default function EditBlog() {
   const GetTheEditedBlog = async () => {
     try {
       await axios
-        .get(`http://127.0.0.1:3000/blog/getBlogById/${id}`)
+        .get(`http://127.0.0.1:3000/blog/getBlogById/${id}`, {
+          withCredentials: true,
+        })
         .then((res) => {
           setEditedBlog(res.data);
         })
