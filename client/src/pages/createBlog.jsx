@@ -19,8 +19,6 @@ const CreateBlog = ({ EditedBlog }) => {
   const [short_description, setShort_description] = useState(EditedBlog.shortDescription || "short description");
   const [userInfo, setUserInfo] = useContext(UserContext);
 
-  console.log("Edited Blog From Create Blog Is", EditedBlog);
-
   const topics = [
     "Programming",
     "Music",
