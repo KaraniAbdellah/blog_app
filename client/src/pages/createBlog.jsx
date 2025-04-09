@@ -9,14 +9,19 @@ import { UserContext } from "../contexts/userContext";
 import toast from "react-hot-toast";
 import { UseConvertTo64 } from "../hooks/useConverter";
 import "../css_filies/create_blog_bg.css";
+import { ReactTyped } from "react-typed";
 
 const CreateBlog = ({ EditedBlog }) => {
   const editor = useRef(null);
   const [content, setContent] = useState(EditedBlog.contentBlog || "content");
   const [title, setTitle] = useState(EditedBlog.blogTitle || "title");
-  const [category, setCategory] = useState(EditedBlog.Category || "Programming");
-  const [image, setImage] = useState(EditedBlog.blogImage || "");
-  const [short_description, setShort_description] = useState(EditedBlog.shortDescription || "short description");
+  const [category, setCategory] = useState(
+    EditedBlog.Category || "Programming"
+  );
+  const [image, setImage] = useState("");
+  const [short_description, setShort_description] = useState(
+    EditedBlog.shortDescription || "short description"
+  );
   const [userInfo, setUserInfo] = useContext(UserContext);
 
   const topics = [
@@ -38,10 +43,18 @@ const CreateBlog = ({ EditedBlog }) => {
       });
   }
 
+  async function UpdateBlog(BlogData) {
+    await axios
+      .put(`http://127.0.0.1:3000/blog/editBlog/${EditedBlog._id}`, BlogData, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  }
+
   const handlePublish = async () => {
     // Check The Inputs and Short Description Size
-    console.log(short_description.length);
-    console.log(category);
     if (
       !title ||
       short_description.length > 200 ||
@@ -73,24 +86,31 @@ const CreateBlog = ({ EditedBlog }) => {
       commentsNumber: 0,
       isSaved: false,
     };
-    console.log(BlogData);
-    CreateBlog(BlogData);
-    toast.success("Success Creating Blog", {
-      duration: 2000,
-      style: { color: "#4BB543", fontWeight: "bold" },
-    });
-  };
-
-  const handleUpdate = async () => {
-    console.log("You Mist Edit This Blog");
+    if (EditedBlog.owner) {
+      UpdateBlog(BlogData);
+      toast.success("Success Updating Blog", {
+        duration: 2000,
+        style: { color: "#4BB543", fontWeight: "bold" },
+      });
+    } else {
+      CreateBlog(BlogData);
+      toast.success("Success Creating Blog", {
+        duration: 2000,
+        style: { color: "#4BB543", fontWeight: "bold" },
+      });
+    }
   };
 
   return (
     <div className="container_bg relative z-[100]">
       <div className="min-h-screen bg-gradient-to-b flex justify-center items-start py-10 px-4">
         <div className="max-w-4xl w-full bg-white opacity-95 rounded-lg shadow-sm p-6 md:p-8 border">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-            Create New Blog
+          <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center bg-gradient-to-r from-sky-600 via-sky-700 to-sky-800 text-transparent bg-clip-text">
+            <ReactTyped
+              strings={[EditedBlog.owner ? "Update Your Blog" : "Create Your Blog"]}
+              typeSpeed={150}
+              backSpeed={100}
+            />
           </h1>
 
           <form className="flex flex-col my-4 w-full space-y-4">
@@ -236,9 +256,9 @@ const CreateBlog = ({ EditedBlog }) => {
             </div>
 
             <div className="flex justify-end mt-6">
-              {EditedBlog ? (
+              {EditedBlog.owner ? (
                 <button
-                  onClick={() => handleUpdate()}
+                  onClick={() => handlePublish()}
                   className="px-8 py-2 bg-gradient-to-r from-sky-600 to-sky-700 text-white font-medium rounded-md hover:from-sky-700 hover:to-sky-800 transition duration-200 shadow-sm"
                 >
                   Update

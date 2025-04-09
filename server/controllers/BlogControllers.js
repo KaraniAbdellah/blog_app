@@ -79,7 +79,7 @@ const deleteBlog = async (req, res) => {
 };
 
 
-// @desc Get Random Blogs
+// @desc Edit Blog Infomation
 // @route PUT /blog/editBlog
 // @access Private
 const editBlog = async (req, res) => {
@@ -87,11 +87,8 @@ const editBlog = async (req, res) => {
   const blogId = req.params.id;
   try {
     const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
-
     // Edited Blog From Blog Model
     const EditedBlog = await BlogModel.findByIdAndUpdate(blogId, req.body);
-    // Edited Blog From Saved Item
-    // const EditedSavedBlog = await SavedBlogModel.deleteOne({ blog: blogId });
 
     res.status(200).json({ message: "Blog Deleted Succefully" });
   } catch (error) {
