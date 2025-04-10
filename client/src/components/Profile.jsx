@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 function Profile() {
   const [userInfo, setUserInfo] = useState([]);
   const [newUserInfo, setNewUserInfo] = useState({
     username: "",
     oldPassword: "",
-    newPassword: ""
-  })
+    newPassword: "",
+  });
   async function getProfile() {
     try {
       const user_profile = await axios.get(
@@ -23,15 +24,39 @@ function Profile() {
     }
   }
 
-  function EditProfile() {}
+  async function CheckCredentials() {
+    try {
+      await axios
+        .put("http://127.0.0.1:3000/user/updateUserInfo", newUserInfo, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  function EditProfile() {
+    if (
+      !newUserInfo.username ||
+      !newUserInfo.oldPassword ||
+      !newUserInfo.newPassword
+    ) {
+      toast.error("Make Sure To Fill all Inputs");
+      return;
+    }
+    CheckCredentials();
+  }
 
   useEffect(() => {
     getProfile();
   }, []);
 
   return (
-    <main className="w-full h-screen flex justify-center items-center">
-      <div className="w-[60%] bg-gray-50 p-5 rounded-md">
+    <main className="w-full mt-16 mb-10 flex justify-center items-center">
+      <div className="w-[90%] sm:w-[80%] md:w-[60%] bg-gray-50 p-5 rounded-md border">
         <div className="back_img flex justify-center items-center flex-col">
           <p className="h-[100px] w-full bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 rounded-t-md"></p>
           <img
@@ -49,18 +74,27 @@ function Profile() {
           className="flex w-full flex-col justify-center items-center mt-5"
         >
           <div className="set_user_name w-full">
-            <label htmlFor="new_username"><span className="text-red-600">*</span> New UserName: </label>
+            <label htmlFor="new_username">
+              <span className="text-red-600">*</span> New Username:{" "}
+            </label>
             <input
+              onChange={(e) =>
+                setNewUserInfo({ ...newUserInfo, username: e.target.value })
+              }
               id="new_username"
               className="mb-2 border w-full p-2 outline-none mt-1"
               type="text"
-              placeholder="New username"
+              placeholder="New Username"
             />
           </div>
           <div className="oldPassword w-full">
-            <label htmlFor="oldPassword"><span className="text-red-600">*</span> New Password: </label>
+            <label htmlFor="oldPassword">
+              <span className="text-red-600">*</span> Old Password:{" "}
+            </label>
             <input
-            onChange={(e) => setUserInfo(() => {oldPassword: e.target.value})}
+              onChange={(e) =>
+                setNewUserInfo({ ...newUserInfo, oldPassword: e.target.value })
+              }
               id="oldPassword"
               className="mb-2 border w-full p-2 outline-none mt-1"
               type="text"
@@ -68,8 +102,13 @@ function Profile() {
             />
           </div>
           <div className="set_password w-full">
-            <label htmlFor="set_password"><span className="text-red-600">*</span> New Username: </label>
+            <label htmlFor="set_password">
+              <span className="text-red-600">*</span> New Password:{" "}
+            </label>
             <input
+              onChange={(e) =>
+                setNewUserInfo({ ...newUserInfo, newPassword: e.target.value })
+              }
               id="set_password"
               className="mb-2 border w-full p-2 outline-none mt-1"
               type="text"

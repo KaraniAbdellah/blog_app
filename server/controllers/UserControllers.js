@@ -100,8 +100,6 @@ const logout = (req, res) => {
   res.json({ message: "ok" });
 };
 
-
-
 // @desc Get The User Information
 // @route  GEt /user/getUserById
 // @access Private
@@ -109,7 +107,6 @@ const getUserById = async (req, res) => {
   const token = req.cookies.user_token;
   try {
     const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
-    console.log(isTokenValid);
     const user = await UserModel.findById(isTokenValid.id);
 
     res.status(200).send(user);
@@ -118,4 +115,42 @@ const getUserById = async (req, res) => {
   }
 };
 
-export { register, login, profile, logout, getUserById };
+function CheckTheOldPassword(EncryptedPassword, oldPassword) {
+  const CheckOlpPassword = bcrypt.compare(
+    EncryptedPassword,
+    oldPassword,
+    process.env.SECRET_KEY,
+    (err, result) => {
+      console.log(result);
+      return result;
+    }
+  );
+  return CheckOlpPassword;
+}
+
+// @desc Update The User Information
+// @route  PUT /user/updateUserInfo
+// @access Private
+const updateUserInfo = async (req, res) => {
+  const token = req.cookies.user_token;
+  try {
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
+
+    const userId = isTokenValid.id;
+    const user = await UserModel.findById(userId);
+
+    console.log(user.password, req.body.oldPassword);
+    // const IsOldPasswordCorrect = CheckTheOldPassword(
+    //   user.password,
+    //   req.body.oldPassword
+    // );
+    // console.log(IsOldPasswordCorrect);
+
+    // Start Updating The User Credentials
+    // .....
+  } catch (error) {
+    res.status(400).send({ message: "Can Not Update User Info", error });
+  }
+};
+
+export { register, login, profile, logout, getUserById, updateUserInfo };

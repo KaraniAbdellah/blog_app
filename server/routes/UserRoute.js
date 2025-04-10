@@ -5,7 +5,8 @@ import {
   login,
   profile,
   logout,
-  getUserById
+  getUserById,
+  updateUserInfo
 } from "../controllers/UserControllers.js";
 
 
@@ -15,5 +16,7 @@ UserRoute.post("/login", login);
 UserRoute.get("/getUserById", getUserById);
 UserRoute.get("/profile", profile);
 UserRoute.get("/logout", logout);
+UserRoute.put("/updateUserInfo", updateUserInfo);
+
 
 export default UserRoute;
