@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router";
 import LoginPage from "./pages/LoginPage";
 import Layout from "./components/Layout";
 import Loading from "./components/Loading";
+import Profile from "./components/Profile";
 import CreateBlog from "./pages/createBlog";
 import Blog_Details from "./pages/Blog_Details";
 import Explore_Topics from "./pages/Explore_Topics";
@@ -11,7 +12,6 @@ import { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import { UserContext } from "./contexts/userContext";
 import { blogChoiceContext } from "./contexts/blogChoiceContext";
-
 
 
 function App() {
@@ -35,6 +35,7 @@ function App() {
             <Route path="/blog/:id" element={<Blog_Details></Blog_Details>}></Route>
             <Route path="/explore-topics" element={<Explore_Topics></Explore_Topics>}></Route>
             <Route path="/edit/:id" element={<EditBlog></EditBlog>}></Route>
+            <Route path="/profile" element={<Profile></Profile>}></Route>
           </Route>
         </Routes>
         <Toaster />

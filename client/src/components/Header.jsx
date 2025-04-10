@@ -55,9 +55,7 @@ const Header = () => {
     getUserProfile();
     // return () => controller.abort();
   }, []);
-  const sayHello = () => {
-    alert("Hello");
-  };
+
   return (
     <header className="h-[70px] border px-8 bg-gray-50 w-full flex justify-between items-center">
       <div className="logo flex justify-between items-center">
@@ -127,12 +125,14 @@ const Header = () => {
           bg-white text-start absolute w-full z-[100] top-[55px] left-0 px-4 py-3 shadow-md
           ${Profile ? "block" : "hidden"}`}
             >
-              <li className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800 mb-4">
-                <span className="mr-3">
-                  <User></User>
-                </span>
-                Profile
-              </li>
+              <Link to="/profile">
+                <li className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800 mb-4">
+                  <span className="mr-3">
+                    <User></User>
+                  </span>
+                  Profile
+                </li>
+              </Link>
               <li
                 onClick={() => Logout()}
                 className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800"
