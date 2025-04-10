@@ -27,7 +27,7 @@ const getUserBlogs = async (req, res) => {
   const id = req.params.id;
   const token = req.cookies.user_token;
   try {
-    const isTokenValid = await jwt.verify(token, process.env.SECRET_KEY);
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
     const blogs = await BlogModel.find({ owner: id }).populate("owner");
     res.status(200).send(blogs);
   } catch (error) {

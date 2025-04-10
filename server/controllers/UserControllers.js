@@ -31,7 +31,6 @@ const register = async (req, res) => {
   }
 };
 
-
 const cookieOptions = {
   secure: true,
   // we are in dev mode --> we do not have https in localhost
@@ -75,12 +74,15 @@ const profile = async (req, res) => {
   const token = req.cookies.user_token;
   try {
     if (token) {
-      const {id, username, iat } = jwt.verify(token, process.env.SECRET_KEY);
-      const user = await UserModel.findById(id);    
-  
+      const { id, username, iat } = jwt.verify(token, process.env.SECRET_KEY);
+      const user = await UserModel.findById(id);
+
       if (id && username && iat && user) {
         res.status(200).send({
-          id, username, iat, userImage: user.userImage,
+          id,
+          username,
+          iat,
+          userImage: user.userImage,
         });
       } else {
         res.status(404).send({ message: "Invalid Profile" });
@@ -98,4 +100,22 @@ const logout = (req, res) => {
   res.json({ message: "ok" });
 };
 
-export { register, login, profile, logout };
+
+
+// @desc Get The User Information
+// @route  GEt /user/getUserById
+// @access Private
+const getUserById = async (req, res) => {
+  const token = req.cookies.user_token;
+  try {
+    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(isTokenValid);
+    const user = await UserModel.findById(isTokenValid.id);
+
+    res.status(200).send(user);
+  } catch (error) {
+    res.status(400).send({ message: "Can Not User Info" });
+  }
+};
+
+export { register, login, profile, logout, getUserById };

@@ -1,22 +1,28 @@
-import React from "react";
-import { useContext } from "react";
-import { UserContext } from "../contexts/userContext";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 
 function Profile() {
-  const userInfo = useContext(UserContext);
-  console.log(userInfo);
+  const [userInfo, setUserInfo] = useState([]);
   async function getProfile() {
-    const user_profile = await axios.get("http://127.0.0.1:3000/user/profile");
-    console.log(user_profile);
+    try {
+      const user_profile = await axios.get(
+        "http://127.0.0.1:3000/user/getUserById",
+        {
+          withCredentials: true,
+        }
+      );
+      setUserInfo(user_profile.data);
+    } catch (error) {
+      console.log(error);
+    }
   }
   useEffect(() => {
     getProfile();
   }, []);
   return (
     <main className="w-full h-screen flex justify-center items-center bg-green-800">
-      <div className="w-[60%] bg-red-50 p-5 rounded-md">
+      <div className="w-[60%] bg-gray-50 p-5 rounded-md">
         <div className="back_img flex justify-center items-center flex-col">
           <p className="h-[100px] w-full bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 rounded-t-md"></p>
           <img
@@ -25,10 +31,39 @@ function Profile() {
             alt="User Profile"
           />
         </div>
-        <div className="user_info">
-          <p>{userInfo.username}</p>
-          <p>{userInfo.email}</p>
+        <div className="user_info text-center">
+          <p className="font-medium">@{userInfo.username}</p>
+          <p className="font-medium">{userInfo.email}</p>
         </div>
+        <ul className="flex flex-col justify-center items-center mt-10">
+          <li className="set_user_name">
+            <label htmlFor="new_username">New Username: </label>
+            <input
+              id="new_username"
+              className="mb-2"
+              type="text"
+              placeholder="New username"
+            />
+          </li>
+          <li className="set_user_name">
+            <label htmlFor="new_username">New Username: </label>
+            <input
+              id="new_username"
+              className="mb-2"
+              type="text"
+              placeholder="New username"
+            />
+          </li>
+          <li className="set_user_name">
+            <label htmlFor="new_username">New Username: </label>
+            <input
+              id="new_username"
+              className="mb-2"
+              type="text"
+              placeholder="New username"
+            />
+          </li>
+        </ul>
       </div>
     </main>
   );
