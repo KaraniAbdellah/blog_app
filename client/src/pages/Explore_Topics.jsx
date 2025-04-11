@@ -61,6 +61,7 @@ const ExploreTopics = () => {
     GetBlogsBySearch();
     setSearched("");
   };
+
   return (
     <div className="w-[100%] p-5 flex justify-center flex-col items-center">
       <div className="flex justify-center flex-col items-center w-[90%] md:w-[60%]">

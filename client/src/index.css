@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .active {
-    background-color: rgb(2 132 199) !important;
-    color: white !important;
+  background-color: rgb(2 132 199) !important;
+  color: white !important;
 }
 

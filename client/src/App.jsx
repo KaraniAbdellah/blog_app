@@ -14,6 +14,7 @@ import { UserContext } from "./contexts/userContext";
 import { blogChoiceContext } from "./contexts/blogChoiceContext";
 
 
+
 function App() {
   const [userInfo, setUserInfo] = useState({});
   const [blogChoice, setBlogChoice] = useState("Your Blogs");

@@ -115,17 +115,8 @@ const getUserById = async (req, res) => {
   }
 };
 
-function CheckTheOldPassword(EncryptedPassword, oldPassword) {
-  const CheckOlpPassword = bcrypt.compare(
-    EncryptedPassword,
-    oldPassword,
-    process.env.SECRET_KEY,
-    (err, result) => {
-      console.log(result);
-      return result;
-    }
-  );
-  return CheckOlpPassword;
+async function CheckTheOldPassword(hashedPassword, oldPassword) {
+  return await bcrypt.compare(oldPassword, hashedPassword);
 }
 
 // @desc Update The User Information
@@ -133,21 +124,32 @@ function CheckTheOldPassword(EncryptedPassword, oldPassword) {
 // @access Private
 const updateUserInfo = async (req, res) => {
   const token = req.cookies.user_token;
+  console.log(req.body);
   try {
     const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
 
     const userId = isTokenValid.id;
     const user = await UserModel.findById(userId);
 
-    console.log(user.password, req.body.oldPassword);
-    // const IsOldPasswordCorrect = CheckTheOldPassword(
-    //   user.password,
-    //   req.body.oldPassword
-    // );
-    // console.log(IsOldPasswordCorrect);
+    const IsOldPasswordCorrect = await CheckTheOldPassword(
+      user.password,
+      req.body.oldPassword
+    );
+    console.log(IsOldPasswordCorrect);
 
-    // Start Updating The User Credentials
-    // .....
+    console.log(IsOldPasswordCorrect);
+    if (IsOldPasswordCorrect === false) {
+      res.status(400).send({ message: "Incorrect password" });
+      return;
+    }
+
+    // Update User Info
+    const UpdatedUser = await UserModel.findByIdAndUpdate(userId, {
+      username: req.body.username,
+      password: bcrypt.hash(req.body.newPassword, bcrypt.genSalt(10)),
+    });
+
+    console.log(UpdatedUser);
   } catch (error) {
     res.status(400).send({ message: "Can Not Update User Info", error });
   }
