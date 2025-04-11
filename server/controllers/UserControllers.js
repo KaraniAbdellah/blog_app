@@ -100,6 +100,8 @@ const logout = (req, res) => {
   res.json({ message: "ok" });
 };
 
+
+
 // @desc Get The User Information
 // @route  GEt /user/getUserById
 // @access Private
@@ -119,6 +121,8 @@ async function CheckTheOldPassword(hashedPassword, oldPassword) {
   return await bcrypt.compare(oldPassword, hashedPassword);
 }
 
+
+
 // @desc Update The User Information
 // @route  PUT /user/updateUserInfo
 // @access Private
@@ -135,9 +139,6 @@ const updateUserInfo = async (req, res) => {
       user.password,
       req.body.oldPassword
     );
-    console.log(IsOldPasswordCorrect);
-
-    console.log(IsOldPasswordCorrect);
     if (IsOldPasswordCorrect === false) {
       res.status(400).send({ message: "Incorrect password" });
       return;
@@ -148,8 +149,6 @@ const updateUserInfo = async (req, res) => {
       username: req.body.username,
       password: bcrypt.hash(req.body.newPassword, bcrypt.genSalt(10)),
     });
-
-    console.log(UpdatedUser);
   } catch (error) {
     res.status(400).send({ message: "Can Not Update User Info", error });
   }
