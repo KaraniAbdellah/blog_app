@@ -128,7 +128,6 @@ async function CheckTheOldPassword(hashedPassword, oldPassword) {
 // @access Private
 const updateUserInfo = async (req, res) => {
   const token = req.cookies.user_token;
-  console.log(req.body);
   try {
     const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
 
@@ -149,8 +148,6 @@ const updateUserInfo = async (req, res) => {
       username: req.body.username,
       password: bcrypt.hashSync(req.body.newPassword, bcrypt.genSaltSync(10)),
     });
-    console.log(UpdatedUser.username);
-    console.log(UpdatedUser.password);
     res.status(200).send({message: "Information Updated Succefully"});
   } catch (error) {
     res.status(400).send({ message: "Can Not Update User Info", error });

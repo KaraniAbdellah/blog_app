@@ -121,7 +121,7 @@ function Blog_Details() {
                 <h1 className="text-3xl text-center font-bold text-gray-800 mb-2">
                   {blogDetails.blogTitle}
                 </h1>
-                <p className="text-gray-600 text-lg">
+                <p className="text-gray-600 text-lg text-center">
                   {blogDetails.shortDescription}
                 </p>
 

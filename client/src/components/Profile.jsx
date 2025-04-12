@@ -32,7 +32,6 @@ function Profile() {
         })
         .then((res) => {
           toast.success("Update Credentiels Successfully");
-          console.log(res);
         });
     } catch (error) {
       toast.error("Incorrect Credentiels");
