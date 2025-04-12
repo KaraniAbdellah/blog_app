@@ -147,8 +147,11 @@ const updateUserInfo = async (req, res) => {
     // Update User Info
     const UpdatedUser = await UserModel.findByIdAndUpdate(userId, {
       username: req.body.username,
-      password: bcrypt.hash(req.body.newPassword, bcrypt.genSalt(10)),
+      password: bcrypt.hashSync(req.body.newPassword, bcrypt.genSaltSync(10)),
     });
+    console.log(UpdatedUser.username);
+    console.log(UpdatedUser.password);
+    res.status(200).send({message: "Information Updated Succefully"});
   } catch (error) {
     res.status(400).send({ message: "Can Not Update User Info", error });
   }

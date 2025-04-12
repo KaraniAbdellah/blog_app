@@ -97,11 +97,11 @@ const Blog = ({blogs, setBlogs}) => {
         <header className="user_info mb-2 flex justify-start items-center">
           <img
             className="w-8 h-8 rounded-full mr-2 object-cover"
-            src={blog.owner.userImage}
+            src={blog.owner ? blog.owner.userImage : ""}
             alt={`User profile`}
           />
           <h3 className="font-semibold text-zinc-800">
-            {blog.owner.username || "Anonymous"}
+            {blog.owner ? blog.owner.username : "Anonymous"}
           </h3>
         </header>
 
