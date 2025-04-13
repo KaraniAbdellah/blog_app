@@ -25,7 +25,7 @@ function Blog_Details() {
 
   const getBlogDetails = async () => {
     try {
-      const res = await axios.get(`http://127.0.0.1:3000/blog/getBlogById/${id}`);
+      const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/blog/getBlogById/${id}`);
       setBlogDetails(res.data);
     } catch (error) {
       console.log("Error In Getting Blog Details: ", error);
@@ -41,7 +41,7 @@ function Blog_Details() {
     }));
     setLike(false);
     try {
-      await axios.get(`http://127.0.0.1:3000/blog/addLike/${id}`, {
+      await axios.get(`${import.meta.env.VITE_SERVER_URL}/blog/addLike/${id}`, {
         withCredentials: true,
       });
     } catch (error) {
@@ -51,7 +51,7 @@ function Blog_Details() {
 
   const IsThisUserLogin = async () => {
     try {
-      await axios.get("http://127.0.0.1:3000/user/profile", {
+      await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
         withCredentials: true,
       });
       return true;
@@ -82,7 +82,7 @@ function Blog_Details() {
 
     try {
       await axios.post(
-        `http://127.0.0.1:3000/blog/addComment/${id}`,
+        `${import.meta.env.VITE_SERVER_URL}/blog/addComment/${id}`,
         { comment },
         { withCredentials: true }
       );

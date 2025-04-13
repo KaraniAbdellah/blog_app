@@ -35,7 +35,7 @@ const CreateBlog = ({ EditedBlog }) => {
   async function CreateBlog(BlogData) {
     console.log(BlogData);
     await axios
-      .post("http://127.0.0.1:3000/blog/createBlog", BlogData, {
+      .post(`${import.meta.env.VITE_SERVER_URL}/blog/createBlog`, BlogData, {
         withCredentials: true,
       })
       .then((res) => {
@@ -45,7 +45,7 @@ const CreateBlog = ({ EditedBlog }) => {
 
   async function UpdateBlog(BlogData) {
     await axios
-      .put(`http://127.0.0.1:3000/blog/editBlog/${EditedBlog._id}`, BlogData, {
+      .put(`${import.meta.env.VITE_SERVER_URL}/blog/editBlog/${EditedBlog._id}`, BlogData, {
         withCredentials: true,
       })
       .then((res) => {

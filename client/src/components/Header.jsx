@@ -21,7 +21,7 @@ const Header = () => {
   const getUserProfile = async () => {
     try {
       await axios
-        .get("http://127.0.0.1:3000/user/profile", {
+        .get(`${import.meta.env.VITE_SERVER_URL}/user/profile`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -35,7 +35,7 @@ const Header = () => {
 
   async function Logout() {
     await axios
-      .get("http://127.0.0.1:3000/user/logout", {
+      .get(`${import.meta.env.VITE_SERVER_URL}/user/logout`, {
         withCredentials: true,
       })
       .then((res) => {

@@ -18,7 +18,7 @@ const Blogs = () => {
     setIsLoading(true);
     try {
       await axios
-        .get("http://127.0.0.1:3000/blog/getRandomBlogs")
+        .get(`${import.meta.env.VITE_SERVER_URL}/blog/getRandomBlogs`)
         .then((res) => {
           console.log(res.data);
           setBlogs(res.data);
@@ -38,7 +38,7 @@ const Blogs = () => {
     setIsLoading(true);
     try {
       await axios
-        .get("http://127.0.0.1:3000/save/getSavedBlog", {
+        .get(`${import.meta.env.VITE_SERVER_URL}/save/getSavedBlog`, {
           withCredentials: true, // for send the set-cookie header
         })
         .then((res) => {
@@ -60,7 +60,7 @@ const Blogs = () => {
     setIsLoading(true);
     try {
       await axios
-        .get(`http://127.0.0.1:3000/blog/getUserBlogs/${userInfo.id}`, {
+        .get(`${import.meta.env.VITE_SERVER_URL}/blog/getUserBlogs/${userInfo.id}`, {
           withCredentials: true,
         })
         .then((res) => {

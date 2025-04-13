@@ -20,7 +20,7 @@ const ExploreTopics = () => {
     setFiltredBlogs([]);
     try {
       await axios
-        .get(`http://127.0.0.1:3000/blog/getBlogByCategory/${category}`, {
+        .get(`${import.meta.env.VITE_SERVER_URL}/blog/getBlogByCategory/${category}`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -39,7 +39,7 @@ const ExploreTopics = () => {
     setFiltredBlogs([]);
     try {
       await axios
-        .get(`http://127.0.0.1:3000/blog/getBlogsBySearch/${searched}`, {
+        .get(`${import.meta.env.VITE_SERVER_URL}/blog/getBlogsBySearch/${searched}`, {
           withCredentials: true,
         })
         .then((res) => {

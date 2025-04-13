@@ -11,7 +11,7 @@ export default function EditBlog() {
   const GetTheEditedBlog = async () => {
     try {
       await axios
-        .get(`http://127.0.0.1:3000/blog/getBlogById/${id}`, {
+        .get(`${import.meta.env.VITE_SERVER_URL}/blog/getBlogById/${id}`, {
           withCredentials: true,
         })
         .then((res) => {

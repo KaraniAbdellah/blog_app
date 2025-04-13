@@ -13,7 +13,7 @@ function Profile() {
   async function getProfile() {
     try {
       const user_profile = await axios.get(
-        "http://127.0.0.1:3000/user/getUserById",
+        `${import.meta.env.VITE_SERVER_URL}/user/getUserById`,
         {
           withCredentials: true,
         }
@@ -27,7 +27,7 @@ function Profile() {
   async function CheckCredentials() {
     try {
       await axios
-        .put("http://127.0.0.1:3000/user/updateUserInfo", newUserInfo, {
+        .put(`${import.meta.env.VITE_SERVER_URL}/user/updateUserInfo`, newUserInfo, {
           withCredentials: true,
         })
         .then((res) => {

@@ -24,7 +24,7 @@ const Blog = ({blogs, setBlogs}) => {
   const SaveBlog = async (blogId) => {
     try {
       await axios
-        .get(`http://127.0.0.1:3000/save/savedBlog/${blogId}`, {
+        .get(`${import.meta.env.VITE_SERVER_URL}/save/savedBlog/${blogId}`, {
           withCredentials: true, // for send the set-cookie header
         })
         .then((res) => {
@@ -48,7 +48,7 @@ const Blog = ({blogs, setBlogs}) => {
 
     try {
       await axios
-        .delete(`http://127.0.0.1:3000/save/deleteSavedBlog/${blogId}`, {
+        .delete(`${import.meta.env.VITE_SERVER_URL}/save/deleteSavedBlog/${blogId}`, {
           withCredentials: true,
         })
         .then((res) => {
@@ -70,7 +70,7 @@ const Blog = ({blogs, setBlogs}) => {
     setBlogs(() => blogs.filter((blog) => blog._id != blogId));
     try {
       await axios
-        .delete(`http://127.0.0.1:3000/blog/deleteBlog/${blogId}`, {
+        .delete(`${import.meta.env.VITE_SERVER_URL}/blog/deleteBlog/${blogId}`, {
           withCredentials: true,
         })
         .then((res) => {

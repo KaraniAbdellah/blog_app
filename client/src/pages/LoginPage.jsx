@@ -41,7 +41,7 @@ const LoginPage = () => {
   const userLogin = async () => {
     try {
       await axios
-        .post(`http://127.0.0.1:3000/user/login`, user, {
+        .post(`${import.meta.env.VITE_SERVER_URL}/user/login`, user, {
           withCredentials: true, // For saving cookie that exit in set-cookie
           // We can use it inside react app
           // Consider the cookie as credentials infomations
@@ -70,7 +70,7 @@ const LoginPage = () => {
   const userRegister = async () => {
     try {
       await axios
-        .post(`http://127.0.0.1:3000/user/register`, user)
+        .post(`${import.meta.env.VITE_SERVER_URL}/user/register`, user)
         .then((res) => {
           if (res.data.message) {
             toast.error("Email Already Exit", {
