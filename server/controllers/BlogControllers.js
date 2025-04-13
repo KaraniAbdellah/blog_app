@@ -90,12 +90,10 @@ const editBlog = async (req, res) => {
 
 // @desc Get Random Blogs
 // @route GET /blog/getBlogById/:id
-// @access Private
+// @access Public
 const getBlogById = async (req, res) => {
   const blogId = req.params.id;
-  const token = req.cookies.user_token;
   try {
-    const isTokenValid = jwt.verify(token, process.env.SECRET_KEY);
     const blogDetails = await BlogModel.findById(blogId).populate("owner");
     if (blogDetails) {
       res.status(200).json(blogDetails);

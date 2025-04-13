@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import Loading from "../components/Loading";
@@ -11,47 +11,39 @@ import {
   User,
 } from "lucide-react";
 import toast from "react-hot-toast";
-import "../css_filies/create_blog_bg.css";
-import { useContext } from "react";
 import { UserContext } from "../contexts/userContext";
 
 
 function Blog_Details() {
-  const params = useParams();
-  const [blogDetails, setBlogDetails] = useState();
+  const { id } = useParams();
+  const [blogDetails, setBlogDetails] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [comment, setComment] = useState("");
   const [like, setLike] = useState(true);
   const [visibleComments, setVisibleComments] = useState(5);
-  const [userStatus, setUserStatus] = useState(undefined);
   const [userInfo] = useContext(UserContext);
-
 
   const getBlogDetails = async () => {
     try {
-      await axios
-        .get(`http://127.0.0.1:3000/blog/getBlogById/${params.id}`,{
-          withCredentials: true,
-        })
-        .then((res) => {
-          console.log(res.data);
-          setBlogDetails(res.data);
-        })
-        .finally(() => setIsLoading(false));
+      const res = await axios.get(`http://127.0.0.1:3000/blog/getBlogById/${id}`);
+      setBlogDetails(res.data);
     } catch (error) {
       console.log("Error In Getting Blog Details: ", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const AddLikes = async () => {
-    blogDetails.likesNumber += 1;
+    setBlogDetails(prev => ({
+      ...prev,
+      likesNumber: prev.likesNumber + 1
+    }));
     setLike(false);
     try {
-      await axios
-        .get(`http://127.0.0.1:3000/blog/addLike/${params.id}`, {
-          withCredentials: true,
-        })
-        .then((res) => {});
+      await axios.get(`http://127.0.0.1:3000/blog/addLike/${id}`, {
+        withCredentials: true,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -59,13 +51,11 @@ function Blog_Details() {
 
   const IsThisUserLogin = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:3000/user/profile", {
+      await axios.get("http://127.0.0.1:3000/user/profile", {
         withCredentials: true,
       });
-      console.log(res.data);
       return true;
     } catch (error) {
-      console.log("This An Error = ", error);
       return false;
     }
   };
@@ -73,7 +63,6 @@ function Blog_Details() {
   const AddComments = async () => {
     const isLoggedIn = await IsThisUserLogin();
 
-    console.log("UserStatus = ", isLoggedIn);
     if (!isLoggedIn) {
       toast("Please Login First");
       return;
@@ -83,13 +72,17 @@ function Blog_Details() {
       return;
     }
 
-    blogDetails.commentsNumber += 1;
-    blogDetails.Commentes.push(comment);
+    setBlogDetails(prev => ({
+      ...prev,
+      commentsNumber: prev.commentsNumber + 1,
+      Commentes: [...prev.Commentes, comment]
+    }));
+    
     setComment("");
 
     try {
       await axios.post(
-        `http://127.0.0.1:3000/blog/addComment/${params.id}`,
+        `http://127.0.0.1:3000/blog/addComment/${id}`,
         { comment },
         { withCredentials: true }
       );
@@ -106,7 +99,7 @@ function Blog_Details() {
 
   useEffect(() => {
     getBlogDetails();
-  }, []);
+  }, [id]);
 
   return (
     <div className="container_bg relative z-[100]">
@@ -115,7 +108,7 @@ function Blog_Details() {
           <Loading />
         ) : (
           <div className="w-full max-w-3xl px-4">
-            <div className="bg-white opacity-95 shadow-dm overflow-hidden mb-6  border rounded-lg">
+            <div className="bg-white opacity-95 shadow-dm overflow-hidden mb-6 border rounded-lg">
               {/* Blog Header */}
               <div className="p-6 border-b border-gray-100 flex flex-col justify-center items-center">
                 <h1 className="text-3xl text-center font-bold text-gray-800 mb-2">
@@ -131,14 +124,14 @@ function Blog_Details() {
                       <img
                         className="w-12 h-12 rounded-full object-cover border-2 border-white shadow"
                         src={
-                          blogDetails.owner.userImage || "/default-avatar.png"
+                          blogDetails.owner ? blogDetails.owner.userImage : "/default-avatar.png"
                         }
                         alt="Profile"
                       />
                     </div>
                     <div>
                       <p className="font-medium text-sky-600">
-                        @{blogDetails.owner.username}
+                        @{blogDetails.owner ? blogDetails.owner.username : ""}
                       </p>
                       <div className="flex items-center text-sm text-gray-500">
                         <Calendar className="w-3 h-3 mr-1" />
@@ -148,13 +141,13 @@ function Blog_Details() {
                   </div>
                 </div>
                 {
-                  userInfo.id === blogDetails.owner._id ? (
+                  userInfo && blogDetails.owner && userInfo.id === blogDetails.owner._id ? (
                     <Link to={`/edit/${blogDetails._id}`}>
                       <button className="px-8 mt-5 py-2 bg-gradient-to-r from-sky-400 via-sky-500 to-sky-600 text-white font-medium rounded-md hover:from-sky-500 hover:to-sky-600 transition duration-200 shadow-sm">
                         Edit Blog
                       </button>
                     </Link>
-                  ) : ""
+                  ) : null
                 }
               </div>
 

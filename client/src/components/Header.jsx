@@ -117,14 +117,15 @@ const Header = () => {
                 />
               </button>
             ) : (
-              <p>loading...</p>
+              <p>...</p>
             )}
 
             <ul
               className={`
-          bg-white text-start absolute w-full z-[100] top-[55px] left-0 px-4 py-3 shadow-md
+          bg-white text-start absolute w-full z-[1000] top-[55px] left-0 px-4 py-3 shadow-md
           ${Profile ? "block" : "hidden"}`}
             >
+              <li className="text-sm mb-4 text-center text-sky-500 font-medium">@{userInfo.username}</li>
               <Link to="/profile">
                 <li className="cursor-pointer flex justify-start items-center text-zinc-600 hover:text-zinc-800 mb-4">
                   <span className="mr-3">
