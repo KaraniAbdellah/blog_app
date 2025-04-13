@@ -129,11 +129,11 @@ const ExploreTopics = () => {
                   <div className="user_info flex items-center px-4 py-3 border-b">
                     <img
                       className="w-10 h-10 rounded-full object-cover mr-3"
-                      src={blog.owner.userImage}
+                      src={blog.owner ?  blog.owner.userImage: ""}
                       alt="user"
                     />
                     <p className="font-medium text-gray-700">
-                      {blog.owner.username}
+                      {blog.owner ?  blog.owner.username: "Anonymous"}
                     </p>
                   </div>
 
