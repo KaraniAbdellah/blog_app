@@ -81,12 +81,12 @@ const Header = () => {
                 navigate("/explore-topics");
               }}
               className="explore_topics flex justify-between top-11 items-center cursor-pointer text-zinc-600
-      hover:text-zinc-900 absolute bg-white w-full px-4 py-4 z-[100] shadow-lg
+      hover:text-zinc-900 absolute bg-white w-full px-4 py-4 shadow-lg
       before:absolute before:border-b-8 before:border-b-white
       before:border-t-8 before:border-t-transparent 
       before:border-r-8 before:border-r-transparent 
       before:border-l-8 before:border-l-transparent 
-      p-10 left-5 before:top-[-14px]"
+      p-10 left-5 before:top-[-14px] z-[200]"
             >
               <p>Explore Topics</p>
               <p>
