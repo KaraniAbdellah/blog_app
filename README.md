@@ -1,3 +1,5 @@
+#### youtube video: https://youtu.be/gwNOMV9Yn6k?si=e4vQgzAOnpvK_qjh
+
 This is a blog application inspired by Medium, where users can:
 
 Like and comment on blogs
